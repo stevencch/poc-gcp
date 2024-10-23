@@ -89,4 +89,55 @@ jobs:
           echo "REPOSITORY_ID=$repository_id" >> "$GITHUB_OUTPUT"
         working-directory: ${{ env.TF_DIR }}
 
- 
+      - name: Get last succesful commit id
+        uses: actions/github-script@v7
+        id: last_successful_commit
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const { data: result } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'Deploy.yml',
+              branch: 'main',
+              status: 'success',
+              per_page: 1
+            });
+            if (!result || result.total_count == 0)
+              return null;
+            else
+              return result.workflow_runs[0].head_sha;
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build and Push Docker Images and identify image tags
+        env:
+          GCP_ARTIFACT_REGISTRY_REPOSITORY_ID: ${{ steps.extract_registry_repo_id.outputs.REPOSITORY_ID }}
+          LAST_SUCCESSFUL_COMMIT: ${{ steps.last_successful_commit.outputs.result }}
+        run: |
+          chmod +x ./deploy/build-push-docker.sh
+          ./deploy/build-push-docker.sh
+
+      - name: Terraform Apply all
+        id: apply
+        run: terraform apply --auto-approve -no-color --var-file=project_images.tfvars
+        working-directory: ${{ env.TF_DIR }}
+      # # This enables task distribution via Nx Cloud
+      # # Run this command as early as possible, before dependencies are installed
+      # # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
+      # # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+
+      # # Cache node_modules
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: 'npm'
+
+      # - run: npm ci --legacy-peer-deps
+      # - uses: nrwl/nx-set-shas@v4
+
+      # # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+      # # - run: npx nx-cloud record -- echo Hello World
+      # # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
+      # - run: npx nx affected -t lint test build
