@@ -21,6 +21,14 @@
           "buildTarget": "my-nest-app:build:production"
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/my-nest-app/Dockerfile . -t my-nest-app"
+    },
+    "docker-run": {
+      "dependsOn": ["docker-build"],
+      "command": "docker run -it --init --rm -p 4112:4112 my-nest-app"
     }
   }
 }

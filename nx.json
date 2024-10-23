@@ -35,7 +35,7 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/myapp-e2e/**/*", "apps/my-nest-app-e2e/**/*"]
+      "exclude": ["apps/my-nest-app-e2e/**/*"]
     },
     {
       "plugin": "@nx/webpack/plugin",
