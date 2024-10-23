@@ -50,6 +50,8 @@ jobs:
         run: |
           echo "TF_API_TOKEN=${{ steps.get-secret.outputs.TF_API_TOKEN }}" >> $GITHUB_ENV
           echo "The retrieved secret is: $TF_API_TOKEN"
+          echo "TF_VAR_gcp_project_id=poc-gcp-439306" >> $GITHUB_ENV
+          
 
       
       - name: Set up Google Auth
