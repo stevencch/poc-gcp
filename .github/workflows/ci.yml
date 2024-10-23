@@ -36,7 +36,7 @@ jobs:
           HCP_API_TOKEN: ${{ steps.get-token.outputs.api_token }}
         run: |
           SECRET_VALUE=$(curl \
-          --location "https://api.cloud.hashicorp.com/secrets/2023-06-13/organizations/1da7c652-6f8c-4ccf-8ed3-f39b40027727/projects/146ca36c-81df-476d-b515-c46f81056e20/apps/sample-app/secrets/secret_key" \
+          --location "https://api.cloud.hashicorp.com/secrets/2023-06-13/organizations/1da7c652-6f8c-4ccf-8ed3-f39b40027727/projects/146ca36c-81df-476d-b515-c46f81056e20/apps/sample-app/secrets/Step1" \
           --request GET \
           --header "Authorization: Bearer $HCP_API_TOKEN" | jq -r .secret.version.value)
           echo "SECRET_VALUE=$SECRET_VALUE"
@@ -47,21 +47,21 @@ jobs:
           echo "The retrieved secret is: ${{ steps.get-secret.outputs.secret_value }}"
   
 
-      # This enables task distribution via Nx Cloud
-      # Run this command as early as possible, before dependencies are installed
-      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+      # # This enables task distribution via Nx Cloud
+      # # Run this command as early as possible, before dependencies are installed
+      # # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
+      # # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
 
-      # Cache node_modules
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+      # # Cache node_modules
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: 'npm'
 
-      - run: npm ci --legacy-peer-deps
-      - uses: nrwl/nx-set-shas@v4
+      # - run: npm ci --legacy-peer-deps
+      # - uses: nrwl/nx-set-shas@v4
 
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      - run: npx nx affected -t lint test build
+      # # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+      # # - run: npx nx-cloud record -- echo Hello World
+      # # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
+      # - run: npx nx affected -t lint test build
