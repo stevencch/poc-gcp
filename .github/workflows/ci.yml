@@ -18,6 +18,35 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Get HCP API Token
+        id: get-token
+        run: |
+          HCP_API_TOKEN=$(curl --location "https://auth.idp.hashicorp.com/oauth2/token" \
+          --header "Content-Type: application/x-www-form-urlencoded" \
+          --data-urlencode "client_id=${{ secrets.HCP_CLIENT_ID }}" \
+          --data-urlencode "client_secret=${{ secrets.HCP_CLIENT_SECRET }}" \
+          --data-urlencode "grant_type=client_credentials" \
+          --data-urlencode "audience=https://api.hashicorp.cloud" | jq -r .access_token)
+          echo "HCP_API_TOKEN=$HCP_API_TOKEN"
+          echo "::set-output name=api_token::$HCP_API_TOKEN"
+
+      - name: Retrieve Secret from HCP
+        id: get-secret
+        env:
+          HCP_API_TOKEN: ${{ steps.get-token.outputs.api_token }}
+        run: |
+          SECRET_VALUE=$(curl \
+          --location "https://api.cloud.hashicorp.com/secrets/2023-06-13/organizations/1da7c652-6f8c-4ccf-8ed3-f39b40027727/projects/146ca36c-81df-476d-b515-c46f81056e20/apps/sample-app/secrets/secret_key" \
+          --request GET \
+          --header "Authorization: Bearer $HCP_API_TOKEN" | jq -r secret.version.value)
+          echo "SECRET_VALUE=$SECRET_VALUE"
+          echo "::set-output name=secret_value::$SECRET_VALUE"
+
+      - name: Display Secret Value
+        run: |
+          echo "The retrieved secret is: ${{ steps.get-secret.outputs.secret_value }}"
+  
+
       # This enables task distribution via Nx Cloud
       # Run this command as early as possible, before dependencies are installed
       # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
