@@ -39,22 +39,22 @@ jobs:
           HCP_API_TOKEN: ${{ steps.get-token.outputs.api_token }}
         run: |
           SECRET_VALUE=$(curl \
-          --location "https://api.cloud.hashicorp.com/secrets/2023-06-13/organizations/1da7c652-6f8c-4ccf-8ed3-f39b40027727/projects/146ca36c-81df-476d-b515-c46f81056e20/apps/sample-app/open/ProjectId" \
+          --location "https://api.cloud.hashicorp.com/secrets/2023-06-13/organizations/1da7c652-6f8c-4ccf-8ed3-f39b40027727/projects/146ca36c-81df-476d-b515-c46f81056e20/apps/sample-app/open/TF_API_TOKEN" \
           --request GET \
           --header "Authorization: Bearer $HCP_API_TOKEN" | jq -r .secret.version.value)
           echo "SECRET_VALUE=$SECRET_VALUE"
-          echo "::set-output name=TF_VAR_gcp_project_id::$SECRET_VALUE"
+          echo "::set-output name=TF_VAR_TF_API_TOKEN::$SECRET_VALUE"
           
 
       - name: Display Secret Value
         run: |
-          echo "TF_VAR_gcp_project_id=${{ steps.get-secret.outputs.SECRET_VALUE }}" >> $GITHUB_ENV
+          echo "TF_VAR_TF_API_TOKEN=${{ steps.get-secret.outputs.TF_VAR_TF_API_TOKEN }}" >> $GITHUB_ENV
           echo "The retrieved secret is: $TF_VAR_gcp_project_id"
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          cli_config_credentials_token: qD3AtMXK4zauQw.atlasv1.XyxQChBy5iYMI1GOyoAHcsZotVzVIfOjiAUTkLkCMaF8HWBPGGcnWNJU3kaaKdMdVfU
+          cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
 
       - name: Terraform fmt
         id: fmt
