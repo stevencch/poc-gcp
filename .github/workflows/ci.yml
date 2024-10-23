@@ -51,15 +51,17 @@ jobs:
           echo "TF_VAR_TF_API_TOKEN=${{ steps.get-secret.outputs.TF_VAR_TF_API_TOKEN }}" >> $GITHUB_ENV
           echo "The retrieved secret is: $TF_VAR_gcp_project_id"
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
+      
       - name: Set up Google Auth
         id: auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
+          
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check -recursive
@@ -115,7 +117,7 @@ jobs:
         run: |
           chmod +x ./deploy/build-push-docker.sh
           ./deploy/build-push-docker.sh
-          
+
       - name: Terraform Apply all
         id: apply
         run: terraform apply --auto-approve -no-color --var-file=project_images.tfvars
