@@ -38,7 +38,7 @@ jobs:
           SECRET_VALUE=$(curl \
           --location "https://api.cloud.hashicorp.com/secrets/2023-06-13/organizations/1da7c652-6f8c-4ccf-8ed3-f39b40027727/projects/146ca36c-81df-476d-b515-c46f81056e20/apps/sample-app/secrets/secret_key" \
           --request GET \
-          --header "Authorization: Bearer $HCP_API_TOKEN" | jq -r secret.version.value)
+          --header "Authorization: Bearer $HCP_API_TOKEN" | jq -r .secret.version.value)
           echo "SECRET_VALUE=$SECRET_VALUE"
           echo "::set-output name=secret_value::$SECRET_VALUE"
 
