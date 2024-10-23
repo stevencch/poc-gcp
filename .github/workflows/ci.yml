@@ -55,7 +55,11 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
-
+      - name: Set up Google Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check -recursive

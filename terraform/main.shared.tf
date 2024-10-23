@@ -15,8 +15,3 @@ locals {
   }
 }
 
-# Environment
-
-locals {
-  is_production_env = var.environment == "staging" || var.environment == "production"
-}
