@@ -1,5 +1,8 @@
 name: CI
 
+env:
+  TF_DIR: './terraform'
+
 on:
   push:
     branches:
@@ -36,14 +39,65 @@ jobs:
           HCP_API_TOKEN: ${{ steps.get-token.outputs.api_token }}
         run: |
           SECRET_VALUE=$(curl \
-          --location "https://api.cloud.hashicorp.com/secrets/2023-06-13/organizations/1da7c652-6f8c-4ccf-8ed3-f39b40027727/projects/146ca36c-81df-476d-b515-c46f81056e20/apps/sample-app/open/Step1" \
+          --location "https://api.cloud.hashicorp.com/secrets/2023-06-13/organizations/1da7c652-6f8c-4ccf-8ed3-f39b40027727/projects/146ca36c-81df-476d-b515-c46f81056e20/apps/sample-app/open/ProjectId" \
           --request GET \
           --header "Authorization: Bearer $HCP_API_TOKEN" | jq -r .secret.version.value)
           echo "SECRET_VALUE=$SECRET_VALUE"
-          echo "::set-output name=secret_value::$SECRET_VALUE"
+          echo "::set-output name=TF_VAR_gcp_project_id::$SECRET_VALUE"
+          
 
       - name: Display Secret Value
         run: |
-          echo "The retrieved secret is: ${{ steps.get-secret.outputs.secret_value }}"
-  
+          echo "TF_VAR_gcp_project_id=${{ steps.get-secret.outputs.SECRET_VALUE }}" >> $GITHUB_ENV
+          echo "The retrieved secret is: $TF_VAR_gcp_project_id"
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: qD3AtMXK4zauQw.atlasv1.XyxQChBy5iYMI1GOyoAHcsZotVzVIfOjiAUTkLkCMaF8HWBPGGcnWNJU3kaaKdMdVfU
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check -recursive
+        working-directory: ${{ env.TF_DIR }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: ${{ env.TF_DIR }}
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: ${{ env.TF_DIR }}
+
+      - name: Terraform Apply artifact registry
+        id: apply_artifact_registry
+        run: terraform apply --auto-approve -no-color -target="module.artifact_registry"
+        working-directory: ${{ env.TF_DIR }}
+
+      - name: Extract artifact registry repo id
+        id: extract_registry_repo_id
+        run: |
+          repository_id=$(terraform output -no-color -json artifact_registry_repository_id | jq -r '.')
+          echo "REPOSITORY_ID=$repository_id" >> "$GITHUB_OUTPUT"
+        working-directory: ${{ env.TF_DIR }}
+
+      # # This enables task distribution via Nx Cloud
+      # # Run this command as early as possible, before dependencies are installed
+      # # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
+      # # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+
+      # # Cache node_modules
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: 'npm'
+
+      # - run: npm ci --legacy-peer-deps
+      # - uses: nrwl/nx-set-shas@v4
+
+      # # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+      # # - run: npx nx-cloud record -- echo Hello World
+      # # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
+      # - run: npx nx affected -t lint test build
