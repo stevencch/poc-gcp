@@ -43,13 +43,13 @@ jobs:
           --request GET \
           --header "Authorization: Bearer $HCP_API_TOKEN" | jq -r .secret.version.value)
           echo "SECRET_VALUE=$SECRET_VALUE"
-          echo "::set-output name=TF_VAR_TF_API_TOKEN::$SECRET_VALUE"
+          echo "::set-output name=TF_API_TOKEN::$SECRET_VALUE"
           
 
       - name: Display Secret Value
         run: |
-          echo "TF_VAR_TF_API_TOKEN=${{ steps.get-secret.outputs.TF_VAR_TF_API_TOKEN }}" >> $GITHUB_ENV
-          echo "The retrieved secret is: $TF_VAR_gcp_project_id"
+          echo "TF_API_TOKEN=${{ steps.get-secret.outputs.TF_API_TOKEN }}" >> $GITHUB_ENV
+          echo "The retrieved secret is: $TF_API_TOKEN"
 
       
       - name: Set up Google Auth
