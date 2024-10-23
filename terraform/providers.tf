@@ -10,7 +10,17 @@ terraform {
       source  = "hashicorp/vault"
       version = "4.2.0"
     }
+    
 
+  }
+
+  cloud { 
+    
+    organization = "example-org-3dd56e" 
+
+    workspaces { 
+      name = "demo-app-sa1-dev" 
+    } 
   }
 
 }
