@@ -16,3 +16,10 @@ variable "gcp_region" {
   default = "australia-southeast1"
 }
 
+variable "project_images" {
+  type = map(object({
+    id  = string,
+    tag = string
+  }))
+  default = {}
+}
