@@ -30,4 +30,9 @@ provider "google" {
   region  = var.gcp_region
 }
 
+provider "vault" {
+  address   = ""
+  namespace = ""
+}
+
 
