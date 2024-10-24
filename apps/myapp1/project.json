@@ -21,6 +21,14 @@
           "buildTarget": "myapp1:build:production"
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/myapp1/Dockerfile . -t myapp1"
+    },
+    "docker-run": {
+      "dependsOn": ["docker-build"],
+      "command": "docker run -it --init --rm -p 4112:4112 myapp1"
     }
   }
 }
