@@ -9,11 +9,11 @@ resource "google_service_account" "cloud_run_sa" {
   display_name = "Ordrfmt MS ${var.name} Service Account"
 }
 
-# resource "google_project_iam_member" "cloud_run_sa_iam_binding" {
-#   project = var.gcp_project_id
-#   role    = "roles/iam.serviceAccountTokenCreator"
-#   member  = "serviceAccount:${google_service_account.cloud_run_sa.email}"
-# }
+resource "google_project_iam_member" "cloud_run_sa_iam_binding" {
+  project = var.gcp_project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${google_service_account.cloud_run_sa.email}"
+}
 
 resource "google_cloud_run_v2_service" "cloud_run_service" {
   name         = "ordrfmt-cr-${var.gcp_region_suffix}-${var.name}-${random_string.suffix.result}"
