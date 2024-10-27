@@ -18,6 +18,8 @@ module "my-nest-app_cloud_run_service" {
   vault_namespace                  = ""
   vault_mount_path                 = ""
   vpc_connector_id                 = ""
+  hpc_client_id                    = var.hpc_client_id
+  hpc_client_secret                = var.hpc_client_secret
   resources_limits = {
     cpu    = "1"
     memory = "512Mi"

@@ -21,6 +21,16 @@ variable "gcp_mssql_pw" {
   default = "4f5a6f94-e214-480d-8288-e19ecbc9b85a"
 }
 
+variable "hpc_client_id" {
+  type    = string
+  default = ""
+}
+
+variable "hpc_client_secret" {
+  type    = string
+  default = ""
+}
+
 variable "project_images" {
   type = map(object({
     id  = string,

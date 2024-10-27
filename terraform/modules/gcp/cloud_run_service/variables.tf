@@ -85,4 +85,14 @@ variable "vpc_connector_id" {
   default = null
 }
 
+variable "hpc_client_id" {
+  type    = string
+  default = ""
+}
+
+variable "hpc_client_secret" {
+  type    = string
+  default = ""
+}
+
 
