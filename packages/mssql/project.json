@@ -1,0 +1,9 @@
+{
+  "name": "mssql",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/mssql/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project mssql --web",
+  "targets": {}
+}

@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@poc-gcp/mssql": ["packages/mssql/src/index.ts"],
+      "@poc-gcp/vault": ["packages/vault/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
