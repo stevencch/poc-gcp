@@ -15,7 +15,9 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   await app.listen(port);
 
-  Logger.log('Environment Variables:', process.env);
+  Object.keys(process.env).forEach((key) => {
+    Logger.log(`ENV: ${key}: ${process.env[key]}`);
+  });
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
   );
