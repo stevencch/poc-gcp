@@ -95,7 +95,7 @@ variable "hpc_client_secret" {
   default = ""
 }
 
-variable "mssql_connection_string" {
+variable "mssql_ip" {
   type    = string
   default = ""
 }

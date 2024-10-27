@@ -9,6 +9,7 @@ export class VaultService {
 
   clientId = process.env['HPC_CLIENT_ID'];
   clientSecret = process.env['HPC_CLIENT_SECRET'];
+  mssql_ip=process.env['MSSQL_IP'];
   organizationId = '1da7c652-6f8c-4ccf-8ed3-f39b40027727';
   projectId = '146ca36c-81df-476d-b515-c46f81056e20';
   appId = 'sample-app';
@@ -64,16 +65,18 @@ export class VaultService {
 
   async getVaultSecrets<T>(): Promise<T> {
     this.logger.log(`hpc info = ${this.clientId}-${this.clientSecret}`);
-    return process.env as T;
-    // if (isRunningLocally()) {
-    //   return process.env as T;
-    // }
-    // const accessToken = await this.getAccessToken();
-    // const secretValue = await this.getSecretValue(
-    //   accessToken,
-    //   'MSSQL_CONNECTION_STRING'
-    // );
-    // return { mssql_connection_string: secretValue } as T;
+    
+    if (isRunningLocally()) {
+      return process.env as T;
+    }
+    const accessToken = await this.getAccessToken();
+    const secretValue = await this.getSecretValue(
+      accessToken,
+      'MSSQL_PASSWORD'
+    );
+    const mssql_connection_string=`Server=${this.mssql_ip},1433;Database=my-database;Integrated Security=False;UID=sqlserver;Password=${secretValue};Trusted_Connection=True;TrustServerCertificate=True;`;
+    this.logger.log(`mssql info = ${mssql_connection_string}`);
+    return { mssql_connection_string } as T;
   }
 }
 
