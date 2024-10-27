@@ -52,6 +52,16 @@ resource "google_cloud_run_v2_service" "cloud_run_service" {
         name  = "SUBSCRIPTION_HANDLER_OUTBOUND_TOPIC"
         value = "test-value"
       }
+
+      env {
+        name  = "HPC_CLIENT_ID"
+        value = var.hpc_client_id
+      }
+
+      env {
+        name  = "HPC_CLIENT_SECRET"
+        value = var.hpc_client_secret
+      }
     }
 
 

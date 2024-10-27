@@ -7,8 +7,8 @@ import axios from 'axios';
 export class VaultService {
   private readonly logger = new Logger(VaultService.name);
 
-  clientId = process.env['hpc_client_id'];
-  clientSecret = process.env['hpc_client_secret'];
+  clientId = process.env['HPC_CLIENT_ID'];
+  clientSecret = process.env['HPC_CLIENT_SECRET'];
   organizationId = '1da7c652-6f8c-4ccf-8ed3-f39b40027727';
   projectId = '146ca36c-81df-476d-b515-c46f81056e20';
   appId = 'sample-app';
@@ -20,7 +20,7 @@ export class VaultService {
 
   async getAccessToken(): Promise<string> {
     try {
-      this.logger.log(`${this.clientId}-${this.clientSecret}`);
+      
       const response = await axios.post(
         'https://auth.idp.hashicorp.com/oauth2/token',
         new URLSearchParams({
@@ -63,6 +63,7 @@ export class VaultService {
   }
 
   async getVaultSecrets<T>(): Promise<T> {
+    this.logger.log(`hpc info = ${this.clientId}-${this.clientSecret}`);
     if (isRunningLocally()) {
       return process.env as T;
     }
