@@ -11,7 +11,7 @@ resource "google_sql_database_instance" "instance" {
   root_password    = var.gcp_mssql_pw
 
   settings {
-    tier = "db-custom-1-10240"
+    tier = "db-custom-2-13312"
   }
 
   deletion_protection = "false"
