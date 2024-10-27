@@ -8,6 +8,7 @@ resource "google_sql_database_instance" "instance" {
   name             = "my-database-instance"
   region           = var.gcp_region
   database_version = "SQLSERVER_2017_EXPRESS"
+  root_password    = var.gcp_mssql_pw
   settings {
     tier = "db-f1-micro"
   }
