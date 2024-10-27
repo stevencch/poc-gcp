@@ -29,11 +29,12 @@ module "my-nest-app_cloud_run_service" {
     min_instance_count = 0
   }
   env_vars = {
-    NO_COLOR        = "true"
-    LOGGING_LEVEL   = "ERROR"
-    GCP_PROJECT_ID  = var.gcp_project_id
-    DRY_RUN         = "false"
-    GCP_LOCATION_ID = var.gcp_region
+    NO_COLOR                   = "true"
+    LOGGING_LEVEL              = "ERROR"
+    GCP_PROJECT_ID             = var.gcp_project_id
+    DRY_RUN                    = "false"
+    GCP_LOCATION_ID            = var.gcp_region
+    PAYMENT_NOTIFICATION_TOPIC = module.payment_notifications_topic.name
   }
 }
 
