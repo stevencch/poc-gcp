@@ -9,8 +9,9 @@ resource "google_sql_database_instance" "instance" {
   region           = var.gcp_region
   database_version = "SQLSERVER_2017_EXPRESS"
   root_password    = var.gcp_mssql_pw
+
   settings {
-    tier = "db-f1-micro"
+    tier = "db-custom-2-13312"
   }
 
   deletion_protection = "true"
