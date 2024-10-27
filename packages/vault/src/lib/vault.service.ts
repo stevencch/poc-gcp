@@ -64,15 +64,16 @@ export class VaultService {
 
   async getVaultSecrets<T>(): Promise<T> {
     this.logger.log(`hpc info = ${this.clientId}-${this.clientSecret}`);
-    if (isRunningLocally()) {
-      return process.env as T;
-    }
-    const accessToken = await this.getAccessToken();
-    const secretValue = await this.getSecretValue(
-      accessToken,
-      'MSSQL_CONNECTION_STRING'
-    );
-    return { mssql_connection_string: secretValue } as T;
+    return process.env as T;
+    // if (isRunningLocally()) {
+    //   return process.env as T;
+    // }
+    // const accessToken = await this.getAccessToken();
+    // const secretValue = await this.getSecretValue(
+    //   accessToken,
+    //   'MSSQL_CONNECTION_STRING'
+    // );
+    // return { mssql_connection_string: secretValue } as T;
   }
 }
 

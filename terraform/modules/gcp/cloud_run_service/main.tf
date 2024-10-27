@@ -62,6 +62,11 @@ resource "google_cloud_run_v2_service" "cloud_run_service" {
         name  = "HPC_CLIENT_SECRET"
         value = var.hpc_client_secret
       }
+
+      env {
+          name  = "MSSQL_CONNECTION_STRING"
+          value = var.mssql_connection_string
+        }
     }
 
 
