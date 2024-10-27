@@ -16,7 +16,10 @@ import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Request, Response } from 'express';
 import { PubSubMessage, PubSubReceivedMessage } from './dto/pubsub.interface';
-import { AjvValidationError, MissingValidationSchemaError } from './validation/validation.errors';
+import {
+  AjvValidationError,
+  MissingValidationSchemaError,
+} from './validation/validation.errors';
 
 @Controller('payment')
 export class PaymentController {
@@ -55,27 +58,7 @@ export class PaymentController {
   ): Promise<void> {
     let message: PubSubMessage<unknown>;
     this.logger.log(`PubSubMessage: ${JSON.stringify(request.body)}`);
-    try {
-      const { body } = request;
-      message = this.paymentService.extractPubSubMessage(body);
-    } catch (error) {
-      this.logger.error(`ExtractPubSubMessage failed: ${error.message}`);
-      throw error;
-    }
 
-    try {
-      await this.paymentService.processOrderMessage(message);
-      response.status(HttpStatus.OK).send();
-    } catch (error) {
-      if (
-        error instanceof AjvValidationError ||
-        error instanceof MissingValidationSchemaError
-      ) {
-        this.logger.error(`Validation failed: ${error.message}`);
-      }
-      throw error;
-    }
+    response.status(HttpStatus.OK).send();
   }
-
-  
 }
