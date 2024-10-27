@@ -36,6 +36,11 @@ module "my-nest-app_cloud_run_service" {
     GCP_LOCATION_ID            = var.gcp_region
     PAYMENT_NOTIFICATION_TOPIC = module.payment_notifications_topic.name
   }
+  required_roles = [
+    "roles/iam.serviceAccountUser",
+    "roles/cloudtasks.enqueuer",
+    "roles/pubsub.publisher"
+  ]
 }
 
 
