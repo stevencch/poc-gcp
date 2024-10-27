@@ -123,6 +123,9 @@ jobs:
 
       - name: Terraform Apply all
         id: apply
+        env:
+          TF_VAR_hpc_client_id: ${{secrets.HCP_CLIENT_ID}}
+          TF_VAR_hpc_client_secret: ${{secrets.HCP_CLIENT_SECRET}}
         run: terraform apply --auto-approve -no-color --var-file=project_images.tfvars
         working-directory: ${{ env.TF_DIR }}
       # # This enables task distribution via Nx Cloud
