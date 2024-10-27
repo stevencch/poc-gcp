@@ -64,9 +64,9 @@ resource "google_cloud_run_v2_service" "cloud_run_service" {
       }
 
       env {
-          name  = "MSSQL_CONNECTION_STRING"
-          value = var.mssql_connection_string
-        }
+        name  = "MSSQL_CONNECTION_STRING"
+        value = var.mssql_connection_string
+      }
     }
 
 
