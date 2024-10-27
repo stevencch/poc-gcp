@@ -4,7 +4,7 @@ module "my-nest-app_cloud_run_service" {
   gcp_region        = var.gcp_region
   gcp_region_suffix = var.region_suffix[var.gcp_region]
   repository_id     = module.artifact_registry.repository_id
-  name              = "my-nest-ap"
+  name              = "my-nest-app"
   # image = {
   #   id  = "my-nest-app",
   #   tag = "90092cc"
