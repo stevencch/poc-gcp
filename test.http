@@ -1,0 +1,14 @@
+### Create order from Cart
+POST http://localhost:3000/api/payment/order-handler
+Content-Type: application/json
+
+{
+  "cart" : {
+    "id" : "7afbadd5-bc82-488e-bd27-edf4c9daf98c",
+    "typeId" : "cart"
+  },
+  "version" : 1,
+  "orderState":"Complete",
+  "paymentState":"Paid",
+  "shipmentState":"Shipped"
+}

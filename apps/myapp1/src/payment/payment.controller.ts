@@ -58,7 +58,8 @@ export class PaymentController {
   ): Promise<void> {
     let message: PubSubMessage<unknown>;
     this.logger.log(`PubSubMessage: ${JSON.stringify(request.body)}`);
-
+    const orderResult = await this.paymentService.getOrder("76580dbc-2491-49f5-9a47-c65efa85dbbb");
+    this.logger.log(`orderResult: ${JSON.stringify(orderResult)}`);
     response.status(HttpStatus.OK).send();
   }
 }

@@ -76,7 +76,9 @@ export class VaultService {
     );
     const mssql_connection_string=`Server=${this.mssql_ip},1433;Database=my-database;Integrated Security=False;UID=sqlserver;Password=${secretValue};Trusted_Connection=True;TrustServerCertificate=True;`;
     this.logger.log(`mssql info = ${mssql_connection_string}`);
-    return { mssql_connection_string } as T;
+    const secrets={ ...process.env,
+        mssql_connection_string }
+    return secrets as T;
   }
 }
 

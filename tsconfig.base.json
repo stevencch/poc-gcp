@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@poc-gcp/commercetools": ["packages/commercetools/src/index.ts"],
       "@poc-gcp/mssql": ["packages/mssql/src/index.ts"],
       "@poc-gcp/pubsub": ["packages/pubsub/src/index.ts"],
       "@poc-gcp/vault": ["packages/vault/src/index.ts"]
