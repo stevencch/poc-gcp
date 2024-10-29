@@ -2,24 +2,26 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug myapp1",
       "type": "node",
       "request": "launch",
+      "name": "Launch myapp1",
       "runtimeExecutable": "npx",
-      "runtimeArgs": [
-        "nx",
-        "run",
-        "myapp1:serve",
-      ],
-      "outputCapture": "std",
-      "internalConsoleOptions": "openOnSessionStart",
-      "console": "internalConsole",
-      "env": {
-        "NODE_OPTIONS": "--require=ts-node/register --require=tsconfig-paths/register",
-        "TS_NODE_IGNORE": "false",
-        "TS_NODE_PROJECT": "${workspaceFolder}/apps/myapp1/tsconfig.json"
-      },
-      "cwd": "${workspaceFolder}/apps/myapp1/"
+      "runtimeArgs": ["nx", "serve", "myapp1", "--inspect"],
+      "console": "integratedTerminal",
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${workspaceRoot}/apps/middleware/*"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch my-nest-app",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["nx", "serve", "my-nest-app", "--inspect"],
+      "console": "integratedTerminal",
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${workspaceRoot}/apps/middleware/*"
+      }
     }
   ]
 }

@@ -5,24 +5,6 @@
   "projectType": "application",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nx/webpack:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "options": {
-        "webpackConfig": "apps/myapp1/webpack.config.js",
-        "target": "node",
-        "compiler": "tsc",
-        "outputPath": "dist/apps/myapp1",
-        "main": "apps/myapp1/src/main.ts",
-        "tsConfig": "apps/myapp1/tsconfig.app.json",
-        "isolatedConfig": true,
-        "assets": [
-          "apps/myapp1/src/assets"
-        ]
-      }
-    },
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
