@@ -23,12 +23,12 @@ variable "gcp_mssql_pw" {
 
 variable "hpc_client_id" {
   type    = string
-  default = "j9MAmmivxtXsk9we3dxR1By-"
+  default = ""
 }
 
 variable "hpc_client_secret" {
   type    = string
-  default = "CzP3TjmZw-xSsCDmBAuLy9LhOKKmQ1Tn"
+  default = ""
 }
 
 variable "project_images" {

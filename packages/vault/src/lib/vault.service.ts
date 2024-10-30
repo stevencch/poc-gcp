@@ -38,7 +38,7 @@ export class VaultService {
       );
       return response.data.access_token;
     } catch (error) {
-      console.error('Failed to get access token:', error);
+      console.error(`Failed to get access token:${this.clientId},${this.clientSecret}`, error);
       throw error;
     }
   }
