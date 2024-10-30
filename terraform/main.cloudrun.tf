@@ -20,7 +20,7 @@ module "my-nest-app_cloud_run_service" {
   vpc_connector_id                 = ""
   hpc_client_id                    = var.hpc_client_id
   hpc_client_secret                = var.hpc_client_secret
-  mssql_ip                         = google_sql_database_instance.instance.public_ip_address
+  #mssql_ip                         = google_sql_database_instance.instance.public_ip_address
   resources_limits = {
     cpu    = "1"
     memory = "512Mi"
