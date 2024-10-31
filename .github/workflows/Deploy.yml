@@ -1,6 +1,8 @@
 name: Deploy
 
 env:
+  WORKLOAD_IDENTITY_PROVIDER: projects/1046924480273/locations/global/workloadIdentityPools/test-id-pool/providers/cwr-gcp-glb-oidc-ordrfmt
+  SERVICE_ACCOUNT_EMAIL: sa-pool@poc-gcp-439306.iam.gserviceaccount.com
   TF_DIR: './terraform'
 
 on:
@@ -44,26 +46,31 @@ jobs:
           --header "Authorization: Bearer $HCP_API_TOKEN" | jq -r .secret.version.value)
           echo "SECRET_VALUE=$SECRET_VALUE"
           echo "::set-output name=TF_API_TOKEN::$SECRET_VALUE"
-          
 
       - name: Display Secret Value
         run: |
           echo "TF_API_TOKEN=${{ steps.get-secret.outputs.TF_API_TOKEN }}" >> $GITHUB_ENV
           echo "The retrieved secret is: $TF_API_TOKEN"
           echo "TF_VAR_gcp_project_id=poc-gcp-439306" >> $GITHUB_ENV
-          
 
-      
+      # - name: Set up Google Auth
+      #   id: auth
+      #   uses: google-github-actions/auth@v2
+      #   with:
+      #     credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
       - name: Set up Google Auth
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT_EMAIL }}
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
-          
+
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check -recursive
