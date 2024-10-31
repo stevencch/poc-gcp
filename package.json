@@ -2,7 +2,18 @@
   "name": "@poc-gcp1/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "docker": "docker run -it --rm -p 4112:4112 --env-file ./.env pop",
+    "docker:build": "npm run build && docker build -t pop:latest -f ./apps/pop/Dockerfile .",
+    "build": "nx affected --target=build",
+    "test": "nx affected --target=test --exclude=*-e2e",
+    "test:e2e": "nx affected --target=e2e",
+    "format": "nx format:check",
+    "format-fix": "nx format:write",
+    "lint": "nx affected --target=lint",
+    "start": "nx run-many -t serve -p pop core --parallel",
+    "mocks": "mocks-server"
+  },
   "private": true,
   "dependencies": {
     "@commercetools/platform-sdk": "^7.17.0",
@@ -20,6 +31,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@mocks-server/main": "^4.1.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/esbuild": "20.0.3",

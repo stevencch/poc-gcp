@@ -79,6 +79,9 @@ jobs:
         run: terraform validate -no-color
         working-directory: ${{ env.TF_DIR }}
 
+      - name: Print JSON content
+        run: cat "$GOOGLE_GHA_CREDS_PATH"
+
       - name: Terraform Apply artifact registry
         id: apply_artifact_registry
         run: terraform apply --auto-approve -no-color -target="module.artifact_registry"
