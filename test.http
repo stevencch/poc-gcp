@@ -12,3 +12,6 @@ Content-Type: application/json
   "paymentState":"Paid",
   "shipmentState":"Shipped"
 }
+
+### test mock server
+GET http://localhost:3100/v1/cw_au/stores/stock/search
