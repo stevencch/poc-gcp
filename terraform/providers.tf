@@ -27,8 +27,8 @@ terraform {
 
 provider "google" {
   impersonate_service_account = "proj-owner@poc-gcp-439306.iam.gserviceaccount.com"
-  project = var.gcp_project_id
-  region  = var.gcp_region
+  project                     = var.gcp_project_id
+  region                      = var.gcp_region
 }
 
 provider "vault" {

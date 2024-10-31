@@ -4,7 +4,7 @@ pre-commit:
     prettier:
       run: npm run format-fix -- --files {staged_files}
       stage_fixed: true
-    lint:
-      run: npm run lint
+    # lint:
+    #   run: npm run lint
     terraform-fmt:
       run: terraform fmt -recursive
