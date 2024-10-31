@@ -1,4 +1,9 @@
-import { Inject, InternalServerErrorException, Logger, OnModuleInit } from '@nestjs/common';
+import {
+  Inject,
+  InternalServerErrorException,
+  Logger,
+  OnModuleInit,
+} from '@nestjs/common';
 import { MssqlSecrets } from '../config';
 import { ConnectionPool } from 'mssql';
 import EventEmitter = require('node:events');
@@ -27,13 +32,9 @@ export class MssqlService implements OnModuleInit {
   }
 
   async getItems(query: string): Promise<any[]> {
-    try {
-        const connection = await this.getConnection();
-      const result = await connection.request().query(query);
-      return result.recordset;
-    } catch (error) {
-      throw error;
-    }
+    const connection = await this.getConnection();
+    const result = await connection.request().query(query);
+    return result.recordset;
   }
 
   async executeStoredProc(procName: string, inputParams: object = {}) {
