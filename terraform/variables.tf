@@ -17,7 +17,7 @@ variable "gcp_region" {
 }
 
 variable "gcp_mssql_pw" {
-  type= string
+  type=string
   default="4f5a6f94-e214-480d-8288-e19ecbc9b85a"
 }
 
