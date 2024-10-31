@@ -1,9 +1,8 @@
 pre-commit:
   parallel: true
   commands:
-    prettier:
-      run: npm run format-fix -- --files {staged_files}
-      stage_fixed: true
+    # prettier:
+    #   run: npm run format-fix -- --files {staged_files}
     # lint:
     #   run: npm run lint
     terraform-fmt:
