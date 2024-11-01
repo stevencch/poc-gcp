@@ -11,7 +11,7 @@ import { knex, Knex } from 'knex';
 import { AuthTypes, Connector, IpAddressTypes } from '@google-cloud/cloud-sql-connector';
 import { isRunningLocally } from '@poc-gcp/vault';
 import { join } from 'node:path';
-
+import 'pg';
 @Injectable()
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(DatabaseService.name);
