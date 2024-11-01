@@ -140,6 +140,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       await this.verifyConnection(this.replicaDatabase);
       this.logger.log('Connected to replica database instance');
     }
+    this.replicaDatabase = this.primaryDatabase;
   }
 
   private async getCloudSqlOptions(instanceConnectionName: string) {

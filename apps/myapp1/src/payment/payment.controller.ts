@@ -67,7 +67,7 @@ export class PaymentController {
   }
 
   @Get('stores/:id')
-  async getStoreById(@Param('id', ParseIntPipe) id: number) {
+  async getStoreById(@Param('id') id: string) {
     const store = await this.paymentService.selectStoreById(id);
     return store;
   }

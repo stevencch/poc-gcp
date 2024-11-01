@@ -46,7 +46,7 @@ export class PaymentService {
     }
   }
 
-  async selectStoreById(id: number): Promise<CwStore[]> {
+  async selectStoreById(id: string): Promise<CwStore[]> {
     this.logger.debug(`Retrieving selectStores `);
 
     const sqlStatement = `
