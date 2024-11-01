@@ -63,10 +63,6 @@ resource "google_cloud_run_v2_service" "cloud_run_service" {
         value = var.hpc_client_secret
       }
 
-      env {
-        name  = "DB_IP"
-        value = var.db_ip
-      }
     }
 
 

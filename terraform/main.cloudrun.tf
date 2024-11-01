@@ -20,7 +20,7 @@ module "my-nest-app_cloud_run_service" {
   vpc_connector_id                 = ""
   hpc_client_id                    = var.hpc_client_id
   hpc_client_secret                = var.hpc_client_secret
-  #db_ip                         = google_sql_database_instance.instance.public_ip_address
+  #db_ip                         = 
   resources_limits = {
     cpu    = "1"
     memory = "512Mi"
@@ -36,6 +36,8 @@ module "my-nest-app_cloud_run_service" {
     DRY_RUN                    = "false"
     GCP_LOCATION_ID            = var.gcp_region
     PAYMENT_NOTIFICATION_TOPIC = module.payment_notifications_topic.name
+    # DB_IP                                         = google_sql_database_instance.instance.public_ip_address
+    DB_PW = var.db_pw
   }
   required_roles = [
     "roles/iam.serviceAccountUser",
@@ -82,7 +84,7 @@ module "myapp1_cloud_run_service" {
     DRY_RUN                                       = "false"
     GCP_LOCATION_ID                               = var.gcp_region
     SQL_DATABASE_PRIMARY_INSTANCE_CONNECTION_NAME = module.mypg.instance_name
-    db_ip                                         = module.mypg.instance_public_ip
-    db_pw                                         = var.db_pw
+    DB_IP                                         = module.mypg.instance_public_ip
+    DB_PW                                         = var.db_pw
   }
 }
