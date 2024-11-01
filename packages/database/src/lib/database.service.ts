@@ -111,8 +111,8 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     const instanceConnectionName =
       type === 'primary' ? this.config.primaryInstanceConnectionName : this.config.replicaInstanceConnectionName;
 
-    const db_ip=process.env['DB_IP'];  
-    const db_pw=process.env['DB_PW'];  
+    const db_ip=process.env['DB_IP'];
+    const db_pw=process.env['DB_PW'];
     const databaseConfig = {
       client: 'pg',
       connection: {
@@ -123,12 +123,12 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
         database: 'shipping-ms',   // Database name
       },
       pool: { min: 0, max: 10 },
-      migrations: {
-        directory: join(__dirname, 'migrations'),
-      },
-      seeds: {
-        directory: join(__dirname, 'seeds'),
-      },
+    //   migrations: {
+    //     directory: join(__dirname, 'migrations'),
+    //   },
+    //   seeds: {
+    //     directory: join(__dirname, 'seeds'),
+    //   },
     };
 
     if (type === 'primary') {
