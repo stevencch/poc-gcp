@@ -10,6 +10,7 @@ import {
   Res,
   Logger,
   HttpStatus,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
@@ -58,8 +59,16 @@ export class PaymentController {
   ): Promise<void> {
     let message: PubSubMessage<unknown>;
     this.logger.log(`PubSubMessage: ${JSON.stringify(request.body)}`);
-    const orderResult = await this.paymentService.getOrder("76580dbc-2491-49f5-9a47-c65efa85dbbb");
+    const orderResult = await this.paymentService.getOrder(
+      '76580dbc-2491-49f5-9a47-c65efa85dbbb'
+    );
     this.logger.log(`orderResult: ${JSON.stringify(orderResult)}`);
     response.status(HttpStatus.OK).send();
+  }
+
+  @Get('stores/:id')
+  async getStoreById(@Param('id', ParseIntPipe) id: number) {
+    const store = await this.paymentService.selectStoreById(id);
+    return store;
   }
 }

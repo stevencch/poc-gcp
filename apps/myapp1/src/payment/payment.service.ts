@@ -5,11 +5,14 @@ import { PubSubMessage, PubSubReceivedMessage } from './dto/pubsub.interface';
 import { NotificationEventType, PaymentNotification } from './dto/payment.notification';
 import { CommercetoolsService } from '@poc-gcp/commercetools';
 import { OrderResult } from './dto/orderResult';
+import { DatabaseService } from 'packages/database/src/lib/database.service';
+import { CwStore } from './payment.interface';
 @Injectable()
 export class PaymentService {
   private readonly logger = new Logger(PaymentService.name);
   constructor(
     private readonly commerceoolsService: CommercetoolsService,
+    private readonly databaseService: DatabaseService
   ) { }
   create(createPaymentDto: CreatePaymentDto) {
     return 'This action adds a new payment';
@@ -41,6 +44,23 @@ export class PaymentService {
     } catch (error) {
       throw new HttpException(error.response?.data || `Error retrieving order details:${error.message}`, error.response?.status || HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  async selectStoreById(id: number): Promise<CwStore[]> {
+    this.logger.debug(`Retrieving selectStores `);
+
+    const sqlStatement = `
+    SELECT
+        id,
+        store_name
+    FROM
+        store.stores
+    WHERE
+        id=?
+    `;
+    return await this.databaseService.select<CwStore>(sqlStatement, [
+      id,
+    ]);
   }
 
 }
