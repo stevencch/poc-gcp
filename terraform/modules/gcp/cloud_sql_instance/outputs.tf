@@ -10,5 +10,5 @@ output "instance_connection_name" {
 
 output "instance_public_ip" {
   description = "The connection name of the SQL instance"
-  value       = google_sql_database_instance.public_ip_address
+  value       = google_sql_database_instance.instance.public_ip_address
 }
