@@ -1,25 +1,11 @@
-resource "google_sql_database" "mypg" {
-  name     = "my-pg"
-  instance = google_sql_database_instance.mypginstance.name
+module "mypg" {
+  source         = "./modules/gcp/cloud_sql_instance"
+  gcp_project_id = var.gcp_project_id
+  gcp_region     = var.gcp_region
+  db_pw          = var.db_pw
 }
 
-# See versions at https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance#database_version
-resource "google_sql_database_instance" "mypginstance" {
-  name             = "my-pg-instance"
-  region           = var.gcp_region
-  database_version = "POSTGRES_9_6"
-  root_password    = var.gcp_mssql_pw
-
-  settings {
-    tier = "db-custom-2-13312"
-    ip_configuration {
-      authorized_networks {
-        name  = "Allow Cloud Run"
-        value = "0.0.0.0/0" # Allow all IPs (for testing; restrict in production)
-      }
-      ipv4_enabled = true
-    }
-  }
-
-  deletion_protection = "false"
+module "shipping_core_cloud_sql_database" {
+  source   = "./modules/gcp/cloud_sql_database"
+  instance = module.mypg.instance_name
 }

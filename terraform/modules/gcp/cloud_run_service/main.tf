@@ -64,8 +64,8 @@ resource "google_cloud_run_v2_service" "cloud_run_service" {
       }
 
       env {
-        name  = "MSSQL_IP"
-        value = var.mssql_ip
+        name  = "DB_IP"
+        value = var.db_ip
       }
     }
 

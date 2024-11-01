@@ -104,21 +104,23 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   }
 
   private async setupCloudDatabases(): Promise<void> {
-    await Promise.all([this.setupDatabase('primary'), this.setupDatabase('replica')]);
+    await Promise.all([this.setupDatabase('primary')]);
   }
 
   private async setupDatabase(type: 'primary' | 'replica'): Promise<void> {
     const instanceConnectionName =
       type === 'primary' ? this.config.primaryInstanceConnectionName : this.config.replicaInstanceConnectionName;
 
-    const clientOptions = await this.getCloudSqlOptions(instanceConnectionName);
-
+    const db_ip=process.env['DB_IP'];  
+    const db_pw=process.env['DB_PW'];  
     const databaseConfig = {
       client: 'pg',
       connection: {
-        ...clientOptions,
-        user: this.config.databaseUser,
-        database: this.config.databaseName,
+        host: db_ip,          // Public IP of the PostgreSQL server
+        port: 5432,                       // Default PostgreSQL port
+        user: 'postgres',            // Username for PostgreSQL
+        password: db_pw ,       // Password for PostgreSQL
+        database: 'shipping-ms',   // Database name
       },
       pool: { min: 0, max: 10 },
       migrations: {

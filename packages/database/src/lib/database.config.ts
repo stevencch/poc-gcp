@@ -24,7 +24,7 @@ type DatabaseConfig = {
 
 export default registerAs('database', () => {
   const databaseConfig: DatabaseConfig = {
-    databaseName: process.env['SQL_DATABASE_NAME'] ?? 'admin',
+    databaseName: process.env['DB_IP'] ?? 'postgres',
     databaseUser: process.env['SQL_DATABASE_USER'] ?? 'admin',
     primaryInstanceConnectionName: process.env['SQL_DATABASE_PRIMARY_INSTANCE_CONNECTION_NAME'] ?? 'xxx',
     replicaInstanceConnectionName: process.env['SQL_DATABASE_REPLICA_INSTANCE_CONNECTION_NAME'] ?? 'xxx',

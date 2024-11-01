@@ -95,9 +95,13 @@ variable "hpc_client_secret" {
   default = ""
 }
 
-variable "mssql_ip" {
+variable "db_ip" {
   type    = string
   default = ""
 }
 
+variable "db_pw" {
+  type    = string
+  default = ""
+}
 
