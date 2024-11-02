@@ -21,6 +21,14 @@
           "buildTarget": "myjob1:build:production"
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/myjob1/Dockerfile . -t myjob1"
+    },
+    "docker-run": {
+      "dependsOn": ["docker-build"],
+      "command": "docker run -it --init --rm myjob1"
     }
   }
 }
