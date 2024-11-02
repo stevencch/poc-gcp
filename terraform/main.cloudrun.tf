@@ -101,7 +101,7 @@ module "myjob1_cloud_run_job" {
   source         = "./modules/gcp/cloud_run_job"
   gcp_project_id = var.gcp_project_id
   gcp_region     = var.gcp_region
-  name           = "myjob1_run"
+  name           = "myjob1run"
   repository_id  = module.artifact_registry.repository_id
   image          = var.project_images["myjob1"]
   task_count     = 1
