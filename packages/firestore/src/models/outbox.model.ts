@@ -4,4 +4,5 @@ export interface OutboxDocument extends DocumentData {
   event_body: string;
   created: Timestamp;
   expire_at: Timestamp;
+  name: string
 }

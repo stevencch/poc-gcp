@@ -21,11 +21,19 @@ import {
   AjvValidationError,
   MissingValidationSchemaError,
 } from './validation/validation.errors';
-
+import {
+  CollectionEnum,
+  FirestoreService,
+} from 'packages/firestore/src/lib/firestore.service';
+import { Filter, Timestamp } from '@google-cloud/firestore';
+import { OutboxDocument } from 'packages/firestore/src/models/outbox.model';
 @Controller('payment')
 export class PaymentController {
   private readonly logger = new Logger(PaymentController.name);
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(
+    private readonly paymentService: PaymentService,
+    private readonly firestoreService: FirestoreService
+  ) {}
 
   @Post()
   create(@Body() createPaymentDto: CreatePaymentDto) {
@@ -70,5 +78,33 @@ export class PaymentController {
   async getStoreById(@Param('id') id: string) {
     const store = await this.paymentService.selectStoreById(id);
     return store;
+  }
+
+  @Get('firestore/:id')
+  async testFireStore(@Param('id') id: string) {
+    const created_at_millis = Date.now();
+    const data = {
+      date: new Date().toISOString(),
+    };
+    await this.firestoreService.insertDocument(
+      CollectionEnum.OUTBOX,
+      {
+        created: Timestamp.fromMillis(created_at_millis),
+        expire_at: Timestamp.fromMillis(created_at_millis + 7 * 86400 * 1000),
+        event_body: JSON.stringify(data),
+        name:id
+      },
+      null,
+      null
+    );
+    const result =
+    await this.firestoreService.queryDocuments<OutboxDocument>(
+      CollectionEnum.OUTBOX,
+      Filter.where('name', '==', id),
+      'created',
+      'asc',
+      3
+    );
+    return result;
   }
 }

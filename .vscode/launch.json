@@ -9,7 +9,7 @@
       "runtimeArgs": ["nx", "serve", "myapp1", "--inspect"],
       "console": "integratedTerminal",
       "sourceMapPathOverrides": {
-        "webpack:///*": "${workspaceRoot}/apps/middleware/*"
+        "webpack:///*": "${workspaceRoot}/apps/myapp1/*"
       }
     },
     {
@@ -20,7 +20,7 @@
       "runtimeArgs": ["nx", "serve", "my-nest-app", "--inspect"],
       "console": "integratedTerminal",
       "sourceMapPathOverrides": {
-        "webpack:///*": "${workspaceRoot}/apps/middleware/*"
+        "webpack:///*": "${workspaceRoot}/apps/my-nest-app/*"
       }
     }
   ]

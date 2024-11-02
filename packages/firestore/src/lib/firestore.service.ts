@@ -3,6 +3,7 @@ import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import firestoreConfig from './firestore.config';
 import { ConfigType } from '@nestjs/config';
 import { Converter } from './firestore.util';
+import { isRunningLocally } from '@poc-gcp/vault';
 export enum CollectionEnum {
     MOCK = 'mock',
     OUTBOX = 'outbox',
@@ -18,10 +19,20 @@ export class FirestoreService implements OnModuleInit {
     private readonly config: ConfigType<typeof firestoreConfig>
   ) {}
   async onModuleInit() {
-    this.db = new Firestore({
-      projectId: this.config.projectId,
-      databaseId: this.config.databaseId,
-    });
+    if(isRunningLocally()){
+        this.db = new Firestore({
+            projectId: this.config.projectId,
+            host:"localhost:8080",
+            ssl: false
+          });
+    }
+    else{
+        this.db = new Firestore({
+            projectId: this.config.projectId,
+            databaseId: this.config.databaseId,
+          });
+    }
+    
   }
 
   async getDocument<T extends DocumentData>(

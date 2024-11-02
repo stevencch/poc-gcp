@@ -3,9 +3,11 @@ import { PaymentService } from './payment.service';
 import { PaymentController } from './payment.controller';
 import { CommercetoolsModule } from '@poc-gcp/commercetools';
 import { DatabaseModule } from '@poc-gcp/database';
+import { FirestoreModule } from '@poc-gcp/firestore';
 @Module({
   imports:[CommercetoolsModule,
-    DatabaseModule
+    DatabaseModule,
+    FirestoreModule
   ],
   controllers: [PaymentController],
   providers: [PaymentService],
