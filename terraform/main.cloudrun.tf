@@ -93,5 +93,5 @@ module "myapp1_cloud_run_service" {
     "roles/cloudtasks.enqueuer",
     "roles/pubsub.publisher",
     "roles/datastore.user"
-  ]  
+  ]
 }
