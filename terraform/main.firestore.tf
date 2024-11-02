@@ -40,6 +40,6 @@ resource "google_firebaserules_ruleset" "firestore_rules" {
 
 
 resource "google_firebaserules_release" "firestore" {
- name         = "cloud.firestore"
- ruleset_name = google_firebaserules_ruleset.firestore_rules.id
+  name         = "cloud.firestore"
+  ruleset_name = google_firebaserules_ruleset.firestore_rules.id
 }
