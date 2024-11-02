@@ -19,7 +19,7 @@ resource "google_firestore_field" "firestore_outbox_expire_at" {
 }
 
 
-resource "google_firebaserules_ruleset" "firestore_rules" {
+resource "google_firebaserules_ruleset" "firestore" {
   project = var.gcp_project_id
 
   source {
@@ -39,7 +39,14 @@ resource "google_firebaserules_ruleset" "firestore_rules" {
 }
 
 
-resource "google_firebaserules_release" "firestore" {
-  name         = "cloud.firestore"
-  ruleset_name = google_firebaserules_ruleset.firestore_rules.id
+resource "google_firebaserules_release" "primary" {
+  name         = "cloud.firestore/database"
+  ruleset_name = "projects/${var.gcp_project_id}/rulesets/${google_firebaserules_ruleset.firestore.name}"
+  project      = var.gcp_project_id
+
+  lifecycle {
+    replace_triggered_by = [
+      google_firebaserules_ruleset.firestore
+    ]
+  }
 }
