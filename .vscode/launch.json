@@ -22,6 +22,17 @@
       "sourceMapPathOverrides": {
         "webpack:///*": "${workspaceRoot}/apps/my-nest-app/*"
       }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch myjob1",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["nx", "serve", "myjob1", "--inspect"],
+      "console": "integratedTerminal",
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${workspaceRoot}/apps/myjob1/*"
+      }
     }
   ]
 }

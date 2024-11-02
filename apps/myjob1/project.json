@@ -1,0 +1,26 @@
+{
+  "name": "myjob1",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/myjob1/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "myjob1:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "myjob1:build:development"
+        },
+        "production": {
+          "buildTarget": "myjob1:build:production"
+        }
+      }
+    }
+  }
+}

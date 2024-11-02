@@ -95,3 +95,36 @@ module "myapp1_cloud_run_service" {
     "roles/datastore.user"
   ]
 }
+
+
+module "myjob1_cloud_run_job" {
+  source         = "./modules/gcp/cloud_run_job"
+  gcp_project_id = var.gcp_project_id
+  gcp_region     = var.gcp_region
+  name           = "myjob1_run"
+  repository_id  = module.artifact_registry.repository_id
+  image          = var.project_images["myjob1"]
+  task_count     = 1
+  max_retries    = 3
+  timeout        = "600s"
+
+  resources_limits = {
+    cpu    = 1
+    memory = "512Mi"
+  }
+  env_vars = {
+    LOGGING_LEVEL                = "ERROR",
+    SYNC_MODE                    = "full"
+    DATA_SOURCE_STORED_PROCEDURE = "TODO"
+    OLD_RECORDS_DAYS             = "2"
+    BATCH_SIZE                   = "50"
+    PUBSUB_MAX_MESSAGES          = "100"
+    PUBSUB_MAX_MILLISECONDS      = "10"
+  }
+  required_roles = [
+    "roles/iam.serviceAccountUser",
+    "roles/pubsub.publisher",
+    "roles/run.developer" # required for run.jobs.runWithOverrides
+  ]
+}
+
