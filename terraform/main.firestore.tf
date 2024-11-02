@@ -5,7 +5,7 @@ module "firestore" {
   name        = "catalogue-fsdb-ause1-core"
 
   index_exemption_fields = {
-    "outbox" = ["event_body", "created"]
+    "outbox" = ["event_body"]
   }
 }
 
