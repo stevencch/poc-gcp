@@ -1,13 +1,24 @@
-import { PubSub } from '@google-cloud/pubsub';
+import { PublishOptions, PubSub } from '@google-cloud/pubsub';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { PubSubReceivedMessage } from './pubsub.interface';
+import { isRunningLocally } from '@poc-gcp/vault';
 
 @Injectable()
 export class PubSubService {
   private readonly logger = new Logger(PubSubService.name);
   private client: PubSub;
+  publishOptions?: PublishOptions;
   constructor() {
-    this.client = new PubSub();
+    if (isRunningLocally()) {
+      this.publishOptions = { gaxOpts: { timeout: 3000 } };
+      this.client = new PubSub({
+        apiEndpoint: process.env['PUBSUB_EMULATOR_HOST'],
+        projectId: process.env['PROJECT_ID'],
+        emulatorMode: true,
+      });
+    } else {
+      this.client = new PubSub();
+    }
   }
 
   extractPubSubMessage<T extends PubSubReceivedMessage>(body: T): T['message'] {

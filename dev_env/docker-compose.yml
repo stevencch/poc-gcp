@@ -1,40 +1,40 @@
 services:
-  # postgres:
-  #   image: postgis/postgis:16-3.4-alpine
-  #   restart: unless-stopped
-  #   profiles:
-  #     - dev_env
-  #     - apps
-  #   ports:
-  #     - '5432:5432'
-  #   environment:
-  #     POSTGRES_USER: admin
-  #     POSTGRES_PASSWORD: admin
-  #     POSTGRES_DB: shipping-ms
-  #   volumes:
-  #     - pgdata:/var/lib/postgresql/data
-  #   healthcheck:
-  #     test: ['CMD-SHELL', 'pg_isready -U admin -d shipping-ms']
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
-  #   networks:
-  #     shipping-ms:
+  postgres:
+    image: postgis/postgis:16-3.4-alpine
+    restart: unless-stopped
+    profiles:
+      - dev_env
+      - apps
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: shipping-ms
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U admin -d shipping-ms']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      shipping-ms:
 
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   restart: unless-stopped
-  #   profiles:
-  #     - dev_env
-  #   ports:
-  #     - '8081:80'
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
-  #     PGADMIN_DEFAULT_PASSWORD: admin
-  #   networks:
-  #     shipping-ms:
-  #   depends_on:
-  #     - postgres
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    profiles:
+      - dev_env
+    ports:
+      - '8081:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      shipping-ms:
+    depends_on:
+      - postgres
 
   firebase-emulator:
     build:
