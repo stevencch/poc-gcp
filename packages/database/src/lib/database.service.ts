@@ -37,7 +37,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   }
   async onModuleInit() {
     this.logger.log('Initializing database service...');
-    return;
+    
     try {
       if (isRunningLocally()) {
         this.logger.debug('Connecting to local database instance');
@@ -48,6 +48,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
         // await this.migrateDatabaseSchema(this.primaryDatabase);
         // await this.seedDatabaseIfEmpty(this.primaryDatabase);
       } else {
+        return;
         this.logger.debug('Connecting to Cloud SQL database instance');
         await this.setupCloudDatabases();
 
