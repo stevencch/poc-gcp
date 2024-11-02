@@ -60,10 +60,7 @@ export class FirestoreService implements OnModuleInit {
   }
   async queryDocuments<T extends DocumentData>(
     collection: CollectionEnum,
-    filter: Filter,
-    orderByField: string | FieldPath,
-    limit: number,
-    orderByDirection?: OrderByDirection
+    filter: Filter
   ): Promise<(T & { documentId: string })[]> {
     try {
       const collectionRef = this.db
@@ -71,9 +68,7 @@ export class FirestoreService implements OnModuleInit {
         .withConverter(Converter<T>());
 
       const query = collectionRef
-        .where(filter)
-        .orderBy(orderByField, orderByDirection)
-        .limit(limit);
+        .where(filter);
 
       const snapshot = await query.get();
       const result: (T & { documentId: string })[] = [];

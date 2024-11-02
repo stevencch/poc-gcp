@@ -100,9 +100,7 @@ export class PaymentController {
     const result =
     await this.firestoreService.queryDocuments<OutboxDocument>(
       CollectionEnum.OUTBOX,
-      Filter.where('name', '==', id),
-      'created',
-      3
+      Filter.where('name', '==', id)
     );
     return result;
   }
@@ -112,9 +110,7 @@ export class PaymentController {
     const result =
     await this.firestoreService.queryDocuments<OutboxDocument>(
       CollectionEnum.OUTBOX,
-      Filter.where('name', '==', id),
-      'created',
-      3
+      Filter.where('name', '==', id)
     );
     return result;
   }
