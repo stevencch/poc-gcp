@@ -107,4 +107,17 @@ export class PaymentController {
     );
     return result;
   }
+
+  @Get('getFirestore/:id')
+  async getFireStore(@Param('id') id: string) {
+    const result =
+    await this.firestoreService.queryDocuments<OutboxDocument>(
+      CollectionEnum.OUTBOX,
+      Filter.where('name', '==', id),
+      'created',
+      'asc',
+      3
+    );
+    return result;
+  }
 }
