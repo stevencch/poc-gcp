@@ -88,4 +88,10 @@ module "myapp1_cloud_run_service" {
     DB_PW       = var.db_pw
     DATABASE_ID = module.firestore.name
   }
+  required_roles = [
+    "roles/iam.serviceAccountUser",
+    "roles/cloudtasks.enqueuer",
+    "roles/pubsub.publisher",
+    "roles/datastore.user"
+  ]  
 }
