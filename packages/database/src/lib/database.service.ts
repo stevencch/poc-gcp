@@ -37,7 +37,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   }
   async onModuleInit() {
     this.logger.log('Initializing database service...');
-
+    return;
     try {
       if (isRunningLocally()) {
         this.logger.debug('Connecting to local database instance');
