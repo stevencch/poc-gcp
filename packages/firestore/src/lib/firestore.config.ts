@@ -7,8 +7,8 @@ const ajv = new Ajv();
 
 export default registerAs('firestore', () => {
   const firestoreConfig = {
-    projectId: process.env['PROJECT_ID'],
-    databaseId: process.env['DATABASE_ID'] || 'localhost:8080',
+    projectId: process.env['GCP_PROJECT_ID'],
+    databaseId: process.env['DATABASE_ID'] ,
   };
 
   return firestoreConfig;
