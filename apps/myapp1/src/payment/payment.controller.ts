@@ -102,7 +102,6 @@ export class PaymentController {
       CollectionEnum.OUTBOX,
       Filter.where('name', '==', id),
       'created',
-      'asc',
       3
     );
     return result;
@@ -115,7 +114,6 @@ export class PaymentController {
       CollectionEnum.OUTBOX,
       Filter.where('name', '==', id),
       'created',
-      'asc',
       3
     );
     return result;

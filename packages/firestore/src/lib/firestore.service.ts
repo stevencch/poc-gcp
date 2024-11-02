@@ -62,8 +62,8 @@ export class FirestoreService implements OnModuleInit {
     collection: CollectionEnum,
     filter: Filter,
     orderByField: string | FieldPath,
-    orderByDirection: OrderByDirection,
-    limit: number
+    limit: number,
+    orderByDirection?: OrderByDirection
   ): Promise<(T & { documentId: string })[]> {
     try {
       const collectionRef = this.db
