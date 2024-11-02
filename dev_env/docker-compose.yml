@@ -1,40 +1,107 @@
 services:
-  postgres:
-    image: postgis/postgis:16-3.4-alpine
-    restart: unless-stopped
+  # postgres:
+  #   image: postgis/postgis:16-3.4-alpine
+  #   restart: unless-stopped
+  #   profiles:
+  #     - dev_env
+  #     - apps
+  #   ports:
+  #     - '5432:5432'
+  #   environment:
+  #     POSTGRES_USER: admin
+  #     POSTGRES_PASSWORD: admin
+  #     POSTGRES_DB: shipping-ms
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ['CMD-SHELL', 'pg_isready -U admin -d shipping-ms']
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #   networks:
+  #     shipping-ms:
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   restart: unless-stopped
+  #   profiles:
+  #     - dev_env
+  #   ports:
+  #     - '8081:80'
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+  #     PGADMIN_DEFAULT_PASSWORD: admin
+  #   networks:
+  #     shipping-ms:
+  #   depends_on:
+  #     - postgres
+
+  firebase-emulator:
+    build:
+      context: ./firebase-emulator
+      dockerfile: Dockerfile
+      args:
+        - FIREBASE_VERSION=13.16.0
     profiles:
       - dev_env
       - apps
-    ports:
-      - '5432:5432'
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: shipping-ms
+      FIREBASE_AUTH_EMULATOR_HOST: '0.0.0.0:9099'
+      FIRESTORE_EMULATOR_HOST: '0.0.0.0:8080'
+      PUBSUB_EMULATOR_HOST: '0.0.0.0:8085'
+      FUNCTIONS_EMULATOR_HOST: '0.0.0.0:5001'
+      PUBSUB_PROJECT_ID: ${PROJECT_ID}
+      FIREBASE_PROJECT: ${PROJECT_ID}
+      GCLOUD_PROJECT: ${PROJECT_ID}
+      FORCE_COLOR: 'true'
+      DATA_DIRECTORY: 'data'
+      CHOKIDAR_USEPOLLING: 'true'
+      DEAD_LETTER_TOPIC: ${DEAD_LETTER_TOPIC}
+      STORES_PROCESSOR_DEAD_LETTER_SUBSCRIPTION: ${STORES_PROCESSOR_DEAD_LETTER_SUBSCRIPTION}
+    ports:
+      - '4000:4000' # ui
+      - '4400:4400' # hub
+      - '4600:4600' # logging
+      - '5001:5001' # functions
+      - '8080:8080' # firestore
+      - '8085:8085' # pubsub
+      - '9000:9000' # database
+      - '9099:9099' # auth
+      - '9199:9199' # Storage
+      - '6000:6000' # Hosting
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U admin -d shipping-ms']
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      shipping-ms:
-
-  pgadmin:
-    image: dpage/pgadmin4
+      - ./firebase-emulator/firebase:/srv/firebase:rw
+      - ./firebase-emulator/cache:/root/.cache/:rw
+      - ./firebase-emulator/firebase/data:/srv/firebase/data:rw
+      - gcloud_config:/root/.config/:rw
+      - ./scripts:/usr/bin/scripts:rw
     restart: unless-stopped
+    networks:
+      - shipping-ms
+
+  pubsub-ui:
+    image: ghcr.io/neoscript/pubsub-emulator-ui:latest
     profiles:
       - dev_env
     ports:
-      - '8081:80'
+      - '8086:80'
+
+  emulator-setup:
+    image: google/cloud-sdk:alpine
+    profiles:
+      - setup
+    entrypoint: >
+      /bin/sh -c "
+      gcloud auth login --no-launch-browser &&
+      gcloud config set api_endpoint_overrides/pubsub http://host.docker.internal:8085/ &&
+      gcloud config set project ${PROJECT_ID}"
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      - PUBSUB_PROJECT_ID=${PROJECT_ID}
+      - PUBSUB_EMULATOR_HOST=0.0.0.0:8085
+    volumes:
+      - gcloud_config:/root/.config/:rw
     networks:
-      shipping-ms:
-    depends_on:
-      - postgres
+      - shipping-ms
 
 networks:
   shipping-ms:
@@ -42,4 +109,10 @@ networks:
 
 volumes:
   pgdata:
+  gcloud_config:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './.config/'
 

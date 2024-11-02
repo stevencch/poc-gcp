@@ -19,13 +19,15 @@
     "migrate:rollback": "knex migrate:rollback --all --knexfile=packages/database/src/lib/knex/knexfile.ts --env=local",
     "seed:run": "knex seed:run --knexfile=packages/database/src/lib/knex/knexfile.ts --env=local",
     "setup": "docker compose run -it --rm emulator-setup",
-    "docker:dev_env": "docker compose --profile dev_env -f docker-compose.yml up -d --build"
+    "docker:dev_env": "docker compose --profile dev_env -f docker-compose.yml up -d --build",
+    "docker:dev_env:down":"docker compose --profile dev_env -f docker-compose.yml down"
   },
   "private": true,
   "dependencies": {
     "@commercetools/platform-sdk": "^7.17.0",
     "@commercetools/sdk-client-v2": "^2.5.0",
     "@google-cloud/cloud-sql-connector": "^1.4.0",
+    "@google-cloud/firestore": "^7.10.0",
     "@google-cloud/pubsub": "^4.8.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/config": "^3.3.0",
