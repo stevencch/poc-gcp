@@ -1,6 +1,7 @@
 name: Deploy
 
 env:
+  NODE_VERSION: 22.x
   WORKLOAD_IDENTITY_PROVIDER: projects/1046924480273/locations/global/workloadIdentityPools/test-id-pool/providers/cwr-gcp-glb-oidc-ordrfmt
   SERVICE_ACCOUNT_EMAIL: sa-pool@poc-gcp-439306.iam.gserviceaccount.com
   TF_DIR: './terraform'
@@ -54,6 +55,15 @@ jobs:
           echo "TF_API_TOKEN=${{ steps.get-secret.outputs.TF_API_TOKEN }}" >> $GITHUB_ENV
           echo "The retrieved secret is: $TF_API_TOKEN"
           echo "TF_VAR_gcp_project_id=poc-gcp-439306" >> $GITHUB_ENV
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+      - name: Install Dependencies
+        run: npm ci
 
       # - name: Set up Google Auth
       #   id: auth
@@ -122,8 +132,6 @@ jobs:
             else
               return result.workflow_runs[0].head_sha;
 
-      - name: Install Dependencies
-        run: npm ci
 
       - name: Build and Push Docker Images and identify image tags
         env:

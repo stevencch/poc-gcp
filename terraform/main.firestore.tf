@@ -19,14 +19,27 @@ resource "google_firestore_field" "firestore_outbox_expire_at" {
 }
 
 
-# Define the security ruleset for Firestore
-resource "google_firebaserules_ruleset" "firestore" {
+resource "google_firebaserules_ruleset" "firestore_rules" {
   project = var.gcp_project_id
+
   source {
     files {
-      content = "service cloud.firestore {match /databases/{database}/documents { match /{document=**} { allow read, write: if true; } } }"
       name    = "firestore.rules"
+      content = <<EOF
+      service cloud.firestore {
+        match /databases/{database}/documents {
+          match /{document=**} {
+            allow read, write: if true;
+          }
+        }
+      }
+      EOF
     }
   }
 }
 
+
+resource "google_firebaserules_release" "firestore" {
+ name         = "cloud.firestore"
+ ruleset_name = google_firebaserules_ruleset.firestore_rules.id
+}
