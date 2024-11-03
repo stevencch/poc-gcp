@@ -1,0 +1,9 @@
+{
+  "name": "csv-processor",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/csv-processor/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project csv-processor --web",
+  "targets": {}
+}
