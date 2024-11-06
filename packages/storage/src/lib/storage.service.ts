@@ -14,12 +14,11 @@ export class StorageService {
   constructor() {
     if (isRunningLocally()) {
       this.storage = new Storage({
+        apiEndpoint: 'http://localhost:9199',
         projectId: process.env['PROJECT_ID'],
       });
-    }
-    else{
+    } else {
       this.storage = new Storage({
-        apiEndpoint: 'http://localhost:9199',
         projectId: process.env['PROJECT_ID'],
       });
     }
@@ -49,7 +48,7 @@ export class StorageService {
 
   public async getAllBuckets() {
     const [buckets] = await this.storage.getBuckets();
-    buckets.forEach(bucket => {
+    buckets.forEach((bucket) => {
       this.logger.log(bucket.name);
     });
   }
