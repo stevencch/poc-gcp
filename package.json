@@ -9,7 +9,7 @@
     "test": "nx affected --target=test --exclude=*-e2e",
     "test:e2e": "nx affected --target=e2e",
     "format": "nx format:check",
-    "format-fix": "nx format:write",
+    "format:fix": "nx format:write",
     "lint": "nx affected --target=lint",
     "start": "nx run-many -t serve -p my-nest-app myapp1 --parallel",
     "mocks": "mocks-server",

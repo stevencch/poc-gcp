@@ -36,4 +36,9 @@ export class UserController {
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
+
+  @Get("read/file")
+  async readfile() {
+    return await this.userService.readfile();
+  }
 }

@@ -16,3 +16,11 @@ Content-Type: application/json
 
 ### test mock server
 GET http://localhost:3100/v1/cw_au/stores/stock/search
+
+
+### read file
+GET http://localhost:3002/api/user/read/file
+
+
+### test pubsub
+GET http://localhost:3002/api/user/test1

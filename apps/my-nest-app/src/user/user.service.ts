@@ -3,12 +3,16 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { MssqlService } from '@poc-gcp/mssql';
 import { PubSubService } from '@poc-gcp/pubsub';
+import { CsvProcessorService } from '@poc-gcp/csv-processor';
+import { StorageService } from '@poc-gcp/storage';
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
   constructor(
     private readonly mssqlService: MssqlService,
-    private readonly pubSubService: PubSubService
+    private readonly pubSubService: PubSubService,
+    private readonly storageService: StorageService,
+    private readonly csvProcessorService: CsvProcessorService
   ) {}
 
   create(createUserDto: CreateUserDto) {
@@ -43,5 +47,43 @@ export class UserService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async readfile() {
+    await this.storageService.getAllBuckets();
+    const inputBucket = process.env['INPUT_BUCKET'];
+    const inputFile = process.env['INPUT_FILE'];
+    const fileStream = this.storageService.getFileStream(
+      inputBucket,
+      inputFile
+    );
+
+    const publishPromises: Promise<string>[] = [];
+    const processor = this.csvProcessorService.readStream(fileStream);
+
+    let itemCount = 0;
+
+    const processLine = (line: string[]) => {
+      try {
+        this.logger.log(`Finished processing file: "${line}"`);
+        itemCount++;
+      } catch (e) {
+        const message = e instanceof Error ? e.message : e;
+        this.logger.error(`Error while processing line: ${message}`);
+      }
+    };
+
+    processor.on('line', processLine);
+
+    const finalBatchNumber = await new Promise((resolve) => {
+      processor.on('finish', async () => {
+        this.logger.log(`Finished processing file: "${inputFile}"`);
+        resolve(1);
+      });
+    });
+    this.logger.log(
+      `Created ${finalBatchNumber} tasks to process ${itemCount} items.`
+    );
+    return 'ok';
   }
 }
