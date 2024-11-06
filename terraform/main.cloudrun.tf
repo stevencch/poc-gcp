@@ -33,11 +33,14 @@ module "my-nest-app_cloud_run_service" {
     NO_COLOR                   = "true"
     LOGGING_LEVEL              = "ERROR"
     GCP_PROJECT_ID             = var.gcp_project_id
+    PROJECT_ID                 = var.gcp_project_id
     DRY_RUN                    = "false"
     GCP_LOCATION_ID            = var.gcp_region
     PAYMENT_NOTIFICATION_TOPIC = module.payment_notifications_topic.name
     # DB_IP                                         = google_sql_database_instance.instance.public_ip_address
-    DB_PW = var.db_pw
+    DB_PW        = var.db_pw
+    INPUT_BUCKET = module.test_cloud_storage.name
+    INPUT_FILE   = "test.csv"
   }
   required_roles = [
     "roles/iam.serviceAccountUser",
