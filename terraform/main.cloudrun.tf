@@ -45,7 +45,8 @@ module "my-nest-app_cloud_run_service" {
   required_roles = [
     "roles/iam.serviceAccountUser",
     "roles/cloudtasks.enqueuer",
-    "roles/pubsub.publisher"
+    "roles/pubsub.publisher",
+    "roles/storage.admin"
   ]
 }
 
