@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@poc-gcp/commercetools": ["packages/commercetools/src/index.ts"],
+      "@poc-gcp/common": ["packages/common/src/index.ts"],
       "@poc-gcp/csv-processor": ["packages/csv-processor/src/index.ts"],
       "@poc-gcp/database": ["packages/database/src/index.ts"],
       "@poc-gcp/firestore": ["packages/firestore/src/index.ts"],

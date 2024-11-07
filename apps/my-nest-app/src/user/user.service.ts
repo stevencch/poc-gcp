@@ -50,7 +50,7 @@ export class UserService {
   }
 
   async readfile() {
-    await this.storageService.getAllBuckets();
+    //await this.storageService.getAllBuckets();
     const inputBucket = process.env['INPUT_BUCKET'];
     const inputFile = process.env['INPUT_FILE'];
     const fileStream = this.storageService.getFileStream(

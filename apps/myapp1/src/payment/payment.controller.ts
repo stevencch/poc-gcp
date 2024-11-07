@@ -27,12 +27,15 @@ import {
 } from 'packages/firestore/src/lib/firestore.service';
 import { Filter, Timestamp } from '@google-cloud/firestore';
 import { OutboxDocument } from 'packages/firestore/src/models/outbox.model';
+import { ProtobufService } from '@poc-gcp/common';
+import { ProtobufSchemaKey } from 'packages/common/src/lib/interfaces/protobuf.interface';
 @Controller('payment')
 export class PaymentController {
   private readonly logger = new Logger(PaymentController.name);
   constructor(
     private readonly paymentService: PaymentService,
-    private readonly firestoreService: FirestoreService
+    private readonly firestoreService: FirestoreService,
+    private readonly protobufService: ProtobufService,
   ) {}
 
   @Post()
@@ -113,5 +116,26 @@ export class PaymentController {
       Filter.where('name', '==', id)
     );
     return result;
+  }
+
+  @Post('handler')
+  async outbound(@Req() request: Request<{ Body: Buffer }>, @Res() response: Response): Promise<void> {
+
+      const payload = this.decodeDocument(request);
+      this.logger.log(`handle: ${payload}`);
+      response.status(HttpStatus.OK).send();
+
+  }
+
+  private decodeDocument(request: Request<{ Body: Buffer }>) {
+    const buffer = Buffer.from(request.body);
+
+    const {
+      value: { fields },
+    } = this.protobufService.decodeProtobuf(ProtobufSchemaKey.FirestoreData, buffer);
+
+    this.logger.debug(`Outbound deserialization: ${JSON.stringify(fields)}`);
+
+    return fields;
   }
 }
