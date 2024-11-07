@@ -1,16 +1,12 @@
 syntax = "proto3";
 
-package comms_microservice;
-
-import "google/protobuf/timestamp.proto";
-
-message OutboundEvent {
+message CloudEvent {
   string id = 1;
   string source = 2;
   string specversion = 3;
   string type = 4;
   string datacontenttype = 5;
-  google.protobuf.Timestamp time = 6;
+  string time = 6;
 
   string data = 7;
 }

@@ -2,7 +2,8 @@ import { google } from '@google-cloud/firestore/types/protos/firestore_v1beta1_p
 
 
 export enum ProtobufSchemaKey {
-  FirestoreData = 'FirestoreData'
+  FirestoreData = 'FirestoreData',
+  EventRouterMessage = 'EventRouterMessage'
 }
 
 export interface ProtobufMetadata {

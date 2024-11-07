@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+message MockEventMessage {
+  string name = 1;
+}

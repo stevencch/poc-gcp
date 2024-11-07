@@ -27,7 +27,7 @@ import {
 } from 'packages/firestore/src/lib/firestore.service';
 import { Filter, Timestamp } from '@google-cloud/firestore';
 import { OutboxDocument } from 'packages/firestore/src/models/outbox.model';
-import { ProtobufService } from '@poc-gcp/common';
+import { ProtobufKey, ProtobufService } from '@poc-gcp/common';
 import { ProtobufSchemaKey } from 'packages/common/src/lib/interfaces/protobuf.interface';
 @Controller('payment')
 export class PaymentController {
@@ -35,7 +35,7 @@ export class PaymentController {
   constructor(
     private readonly paymentService: PaymentService,
     private readonly firestoreService: FirestoreService,
-    private readonly protobufService: ProtobufService,
+    private readonly protobufService: ProtobufService
   ) {}
 
   @Post()
@@ -95,13 +95,12 @@ export class PaymentController {
         created: Timestamp.fromMillis(created_at_millis),
         expire_at: Timestamp.fromMillis(created_at_millis + 7 * 86400 * 1000),
         event_body: JSON.stringify(data),
-        name:id
+        name: id,
       },
-      null,
-      null
+      undefined,
+      undefined
     );
-    const result =
-    await this.firestoreService.queryDocuments<OutboxDocument>(
+    const result = await this.firestoreService.queryDocuments<OutboxDocument>(
       CollectionEnum.OUTBOX,
       Filter.where('name', '==', id)
     );
@@ -110,8 +109,7 @@ export class PaymentController {
 
   @Get('getFirestore/:id')
   async getFireStore(@Param('id') id: string) {
-    const result =
-    await this.firestoreService.queryDocuments<OutboxDocument>(
+    const result = await this.firestoreService.queryDocuments<OutboxDocument>(
       CollectionEnum.OUTBOX,
       Filter.where('name', '==', id)
     );
@@ -119,23 +117,19 @@ export class PaymentController {
   }
 
   @Post('handler')
-  async outbound(@Req() request: Request<{ Body: Buffer }>, @Res() response: Response): Promise<void> {
+  async outbound(
+    @Req() request: Request,
+    @Res() response: Response
+  ): Promise<void> {
+    let payload: unknown;
+    payload = this.protobufService.decode(
+      ProtobufKey.EventRouterMessage,
+      request.body
+    );
 
-      const payload = this.decodeDocument(request);
-      this.logger.log(`handle: ${payload}`);
-      response.status(HttpStatus.OK).send();
-
+    this.logger.log(`handle: ${payload}`);
+    response.status(HttpStatus.OK).send();
   }
 
-  private decodeDocument(request: Request<{ Body: Buffer }>) {
-    const buffer = Buffer.from(request.body);
 
-    const {
-      value: { fields },
-    } = this.protobufService.decodeProtobuf(ProtobufSchemaKey.FirestoreData, buffer);
-
-    this.logger.debug(`Outbound deserialization: ${JSON.stringify(fields)}`);
-
-    return fields;
-  }
 }
