@@ -16,6 +16,13 @@ module.exports = {
       outputHashing: 'none',
       generatePackageJson: true,
       sourceMap: true,
+      assets: [
+        {
+          input: join(__dirname, '../../schemas/protobuf'),
+          glob: '**/*.proto',
+          output: './assets/proto',
+        },
+      ],
     }),
   ],
 };
