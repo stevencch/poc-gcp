@@ -28,7 +28,6 @@ export class FirestoreService implements OnModuleInit {
           });
     }
     else{
-        return;
         this.db = new Firestore({
             projectId: this.config.projectId,
             databaseId: this.config.databaseId,
