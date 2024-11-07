@@ -89,8 +89,8 @@ module "myapp1_cloud_run_service" {
     GCP_LOCATION_ID = var.gcp_region
     #SQL_DATABASE_PRIMARY_INSTANCE_CONNECTION_NAME = module.mypg.instance_name
     #DB_IP                                         = module.mypg.instance_public_ip
-    DB_PW = var.db_pw
-    #DATABASE_ID = module.firestore.name
+    DB_PW       = var.db_pw
+    DATABASE_ID = module.firestore.name
   }
   required_roles = [
     "roles/iam.serviceAccountUser",
