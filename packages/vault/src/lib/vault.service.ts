@@ -74,10 +74,26 @@ export class VaultService {
       accessToken,
       'MSSQL_PASSWORD'
     );
+    const ct_client_id = await this.getSecretValue(
+      accessToken,
+      'CT_CLIENT_ID'
+    );
+    const ct_client_secret = await this.getSecretValue(
+      accessToken,
+      'CT_CLIENT_SECRET'
+    );
+    const ct_scopes = await this.getSecretValue(
+      accessToken,
+      'CT_SCOPES'
+    );
     const mssql_connection_string=`Server=${this.db_ip},1433;Database=my-database;Integrated Security=False;UID=sqlserver;Password=${secretValue};Trusted_Connection=True;TrustServerCertificate=True;`;
     this.logger.log(`mssql info = ${mssql_connection_string}`);
     const secrets={ ...process.env,
-        mssql_connection_string }
+        mssql_connection_string,
+        ct_client_id,
+        ct_client_secret,
+        ct_scopes
+       }
     return secrets as T;
   }
 }
