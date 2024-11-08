@@ -9,12 +9,19 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import * as express from 'express';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { getLoggingLevels } from '@poc-gcp/common';
 async function bootstrap() {
   Object.keys(process.env).forEach((key) => {
     Logger.warn(`ENV: ${key}: ${process.env[key]}`);
   });
-  const app = await NestFactory.create(AppModule);
-  app.use(express.raw({ type: 'application/protobuf' }));
+  const loggingLevels = getLoggingLevels();
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: loggingLevels,
+  });
+
+  app.useBodyParser('raw', { type: 'application/protobuf' });
   app.use(
     '/api/payment/handler1',
     createProxyMiddleware({

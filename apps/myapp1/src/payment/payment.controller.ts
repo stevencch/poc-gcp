@@ -122,21 +122,14 @@ export class PaymentController {
     @Res() response: Response
   ): Promise<void> {
     let payload: unknown;
-    this.logger.log(`Request: ${JSON.stringify(request.body)}`);
-    if (Buffer.isBuffer(request.body)) {
-      this.logger.log("The object is a Buffer.");
-    } else {
-      this.logger.log("The object is not a Buffer.");
-    }
-    this.logger.log(`typeof: ${typeof request.body}`);
-    this.logger.log(`prototype: ${Object.prototype.toString.call(request.body)}`);
+
     const buffer = Buffer.from(request.body)
     payload = this.protobufService.decode(
       ProtobufKey.EventRouterMessage,
       buffer
     );
 
-    this.logger.log(`handle: ${payload}`);
+    this.logger.log(`handle: ${JSON.stringify(payload)}`);
     response.status(HttpStatus.OK).send();
   }
 

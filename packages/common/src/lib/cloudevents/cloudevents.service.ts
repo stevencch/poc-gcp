@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CloudEvent } from 'cloudevents';
-import { ValidatorService } from '../validator';
+
 import {
   MockPayload,
-  NewAdminImportPayload,
-  ProductInformationImportPayload,
-  PimsImportPayload,
   SchemaKey,
   EventRouterPayload,
   OutboxItem_WIP,
@@ -22,9 +19,6 @@ export enum CloudEventTypes {
 
 export interface CloudEventTypesMap {
   [CloudEventTypes.MockImportEvent]: MockPayload;
-  [CloudEventTypes.NewAdminImportEvent]: NewAdminImportPayload;
-  [CloudEventTypes.ProductInformationImportEvent]: ProductInformationImportPayload;
-  [CloudEventTypes.PimsImportEvent]: PimsImportPayload;
   [CloudEventTypes.ProductWrittenEvent]: OutboxItem_WIP;
 }
 
@@ -41,7 +35,7 @@ const cloudEventSchemaMap = new Map<CloudEventTypes, SchemaKey>([
 
 @Injectable()
 export class CloudEventService {
-  constructor(private readonly validatorService: ValidatorService) {}
+  constructor() {}
 
   public extractData<T extends keyof CloudEventTypesMap>(
     event: unknown,
@@ -65,9 +59,7 @@ export class CloudEventService {
 
     const parsedData = JSON.parse(cloudEvent.data);
 
-    if (!this.validatorService.validate(schemaKey, parsedData)) {
-      throw new Error('Invalid payload format');
-    }
+
 
     return parsedData as CloudEventTypesMap[T];
   }

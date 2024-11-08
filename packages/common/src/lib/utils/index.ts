@@ -5,3 +5,4 @@ export * from './isWithinXDays';
 export * from './logging';
 export * from './maxDate';
 export * from './parseDateString';
+export * from './logging'
