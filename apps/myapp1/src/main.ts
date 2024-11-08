@@ -10,7 +10,8 @@ import { AppModule } from './app/app.module';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import * as express from 'express';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { getLoggingLevels } from '@poc-gcp/common';
+import { getLoggingLevels, isRunningLocally } from '@poc-gcp/common';
+import { GcpLogger } from '@poc-gcp/logger';
 async function bootstrap() {
   Object.keys(process.env).forEach((key) => {
     Logger.warn(`ENV: ${key}: ${process.env[key]}`);
@@ -22,6 +23,7 @@ async function bootstrap() {
   });
 
   app.useBodyParser('raw', { type: 'application/protobuf' });
+  if (!isRunningLocally()) app.useLogger(app.get(GcpLogger));
   app.use(
     '/api/payment/handler1',
     createProxyMiddleware({
