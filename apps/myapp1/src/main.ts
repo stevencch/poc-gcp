@@ -8,12 +8,13 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-
+import * as express from 'express';
 async function bootstrap() {
   Object.keys(process.env).forEach((key) => {
     Logger.warn(`ENV: ${key}: ${process.env[key]}`);
   });
   const app = await NestFactory.create(AppModule);
+  app.use(express.raw({ type: 'application/protobuf' }));
   app.use(
     '/api/payment/handler1',
     createProxyMiddleware({
