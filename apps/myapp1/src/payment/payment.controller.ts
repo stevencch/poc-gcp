@@ -122,6 +122,7 @@ export class PaymentController {
     @Res() response: Response
   ): Promise<void> {
     let payload: unknown;
+    this.logger.log(`Request: ${request.body}`);
     payload = this.protobufService.decode(
       ProtobufKey.EventRouterMessage,
       request.body
