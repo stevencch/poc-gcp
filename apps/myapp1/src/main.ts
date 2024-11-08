@@ -15,7 +15,7 @@ async function bootstrap() {
   });
   const app = await NestFactory.create(AppModule);
   app.use(
-    '/api/payment/handler',
+    '/api/payment/handler1',
     createProxyMiddleware({
         target: 'https://webhook.site/28cec492-dc6c-4a34-96d5-e8d1a1fa5aca', // New destination URL
         changeOrigin: true,

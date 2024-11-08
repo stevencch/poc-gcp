@@ -116,7 +116,7 @@ export class PaymentController {
     return result;
   }
 
-  @Post('handler1')
+  @Post('handler')
   async outbound(
     @Req() request: Request,
     @Res() response: Response

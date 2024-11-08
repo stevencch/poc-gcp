@@ -27,7 +27,7 @@ GET http://localhost:3002/api/user/test1
 
 
 ### forward
-POST http://localhost:3001/api/payment/handler
+POST http://localhost:3001/api/payment/handler1?v=222
 Content-Type: application/json
 
 {
