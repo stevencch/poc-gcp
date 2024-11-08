@@ -24,3 +24,19 @@ GET http://localhost:3002/api/user/read/file
 
 ### test pubsub
 GET http://localhost:3002/api/user/test1
+
+
+### forward
+POST http://localhost:3001/api/payment/handler
+Content-Type: application/json
+
+{
+  "cart" : {
+    "id" : "7afbadd5-bc82-488e-bd27-edf4c9daf98c",
+    "typeId" : "cart"
+  },
+  "version" : 1,
+  "orderState":"Complete",
+  "paymentState":"Paid",
+  "shipmentState":"Shipped"
+}

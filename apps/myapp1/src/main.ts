@@ -7,12 +7,20 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 async function bootstrap() {
   Object.keys(process.env).forEach((key) => {
     Logger.warn(`ENV: ${key}: ${process.env[key]}`);
   });
   const app = await NestFactory.create(AppModule);
+  app.use(
+    '/api/payment/handler',
+    createProxyMiddleware({
+        target: 'https://webhook.site/28cec492-dc6c-4a34-96d5-e8d1a1fa5aca', // New destination URL
+        changeOrigin: true,
+    })
+);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3001;
