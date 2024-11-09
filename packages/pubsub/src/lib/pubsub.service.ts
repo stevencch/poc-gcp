@@ -1,4 +1,4 @@
-import { PublishOptions, PubSub } from '@google-cloud/pubsub';
+import { protos, PublishOptions, PubSub } from '@google-cloud/pubsub';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { PubSubReceivedMessage } from './pubsub.interface';
 import { isRunningLocally } from '@poc-gcp/vault';
@@ -41,6 +41,19 @@ export class PubSubService {
   }
 
   constructPublishUrl(projectId: string, topicId: string): string {
+    if (isRunningLocally()) {
+      return `http://${process.env['PUBSUB_EMULATOR_HOST']}/v1/projects/${projectId}/topics/${topicId}:publish`;
+    }
     return `https://pubsub.googleapis.com/v1/projects/${projectId}/topics/${topicId}:publish`;
+  }
+
+  static constructPublishBody(
+    data: string[]
+  ): protos.google.pubsub.v1.IPublishRequest {
+    return {
+      messages: data.map((d) => ({
+        data: d,
+      })),
+    };
   }
 }

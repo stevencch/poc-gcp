@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@poc-gcp/cloud-tasks": ["packages/cloud-tasks/src/index.ts"],
       "@poc-gcp/commercetools": ["packages/commercetools/src/index.ts"],
       "@poc-gcp/common": ["packages/common/src/index.ts"],
       "@poc-gcp/csv-processor": ["packages/csv-processor/src/index.ts"],

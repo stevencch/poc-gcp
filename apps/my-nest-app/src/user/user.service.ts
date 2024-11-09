@@ -1,10 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { MssqlService } from '@poc-gcp/mssql';
 import { PubSubService } from '@poc-gcp/pubsub';
 import { CsvProcessorService } from '@poc-gcp/csv-processor';
 import { StorageService } from '@poc-gcp/storage';
+import { CloudTasksService } from '@poc-gcp/cloud-tasks';
+import { ConfigType } from '@nestjs/config';
+import userConfig from './user.config';
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
@@ -12,7 +15,10 @@ export class UserService {
     private readonly mssqlService: MssqlService,
     private readonly pubSubService: PubSubService,
     private readonly storageService: StorageService,
-    private readonly csvProcessorService: CsvProcessorService
+    private readonly csvProcessorService: CsvProcessorService,
+    private readonly cloudTaskService: CloudTasksService,
+    @Inject(userConfig.KEY)
+    private readonly config: ConfigType<typeof userConfig>
   ) {}
 
   create(createUserDto: CreateUserDto) {
@@ -85,5 +91,23 @@ export class UserService {
       `Created ${finalBatchNumber} tasks to process ${itemCount} items.`
     );
     return 'ok';
+  }
+
+  async testTask() {
+    const {
+      topicName,
+      projectId,
+      taskQueueName
+    } = this.config;
+
+    const publishUrl = this.pubSubService.constructPublishUrl(
+      projectId,
+      topicName
+    );
+    await this.cloudTaskService.publishTask(
+      taskQueueName,
+      publishUrl,
+      PubSubService.constructPublishBody(["a",new Date().toISOString()])
+    )
   }
 }

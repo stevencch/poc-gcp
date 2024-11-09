@@ -41,4 +41,9 @@ export class UserController {
   async readfile() {
     return await this.userService.readfile();
   }
+
+  @Get("test/task/run")
+  async testTask() {
+    return await this.userService.testTask();
+  }
 }

@@ -40,3 +40,7 @@ Content-Type: application/json
   "paymentState":"Paid",
   "shipmentState":"Shipped"
 }
+
+
+### test run task
+GET http://localhost:3002/api/user/test/task/run
