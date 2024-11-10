@@ -65,6 +65,10 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Build
+        id: build
+        run: npm run build
+
       # - name: Set up Google Auth
       #   id: auth
       #   uses: google-github-actions/auth@v2
