@@ -1,5 +1,5 @@
 import { DocumentData, Timestamp } from '@google-cloud/firestore';
-import { Message, DeadLetterAttributes } from '@cwr-gcp-common/common';
+import { Message, DeadLetterAttributes } from '@poc-gcp/common';
 
 export interface DeadLetterMessagesDocument extends DocumentData {
   id: string;
