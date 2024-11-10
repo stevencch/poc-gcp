@@ -10,9 +10,13 @@ import { AppModule } from './app/app.module';
 import { isRunningLocally } from '@poc-gcp/vault';
 import { GcpLogger } from '@poc-gcp/logger';
 import { AppService } from './app/app.service';
+import { getLoggingLevels } from '@poc-gcp/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const loggingLevels = getLoggingLevels();
+  const app = await NestFactory.create(AppModule, {
+    logger: loggingLevels,
+  });
   if (!isRunningLocally()) app.useLogger(app.get(GcpLogger));
   const service = app.get(AppService);
   Logger.log(`🚀 Application is running`);
@@ -23,3 +27,4 @@ async function bootstrap() {
 }
 
 bootstrap();
+

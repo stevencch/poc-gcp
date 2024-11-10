@@ -24,7 +24,10 @@ export class CloudTasksService implements OnModuleInit {
     body: T
   ): Promise<string> {
     const { projectId, locationId, serviceAccountEmail } = this.config;
+    
     try {
+      const data=Buffer.from(JSON.stringify(body)).toString('base64');
+      this.logger.log(`config: ${JSON.stringify(this.config)},data:${data}`);
       const parent = this.cloudTasksClient.queuePath(
         projectId,
         locationId,
@@ -37,7 +40,7 @@ export class CloudTasksService implements OnModuleInit {
           },
           httpMethod: 'POST',
           url: httpTarget,
-          body: Buffer.from(JSON.stringify(body)).toString('base64'),
+          body: data,
           oauthToken: {
             serviceAccountEmail: serviceAccountEmail,
           },

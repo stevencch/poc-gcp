@@ -104,10 +104,11 @@ export class UserService {
       projectId,
       topicName
     );
-    await this.cloudTaskService.publishTask(
+    const name=await this.cloudTaskService.publishTask(
       taskQueueName,
       publishUrl,
       PubSubService.constructPublishBody(["a",new Date().toISOString()])
-    )
+    );
+    return name;
   }
 }

@@ -44,6 +44,7 @@ export class UserController {
 
   @Get("test/task/run")
   async testTask() {
-    return await this.userService.testTask();
+    var name=await this.userService.testTask();
+    return name;
   }
 }
