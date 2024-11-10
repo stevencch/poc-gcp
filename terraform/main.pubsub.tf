@@ -56,8 +56,8 @@ module "core_deadletter_subscription" {
   source                     = "./modules/gcp/pubsub_subscription"
   name                       = "deliveryoptions"
   topic                      = module.core_deadletter_topic.name
-  endpoint                   = data.tfe_outputs.common.nonsensitive_values.error_handler_url
-  service_account_email      = data.tfe_outputs.common.nonsensitive_values.error_handler_service_account_email
+  endpoint                   = module.error_handler_cf.function_url
+  service_account_email      = module.error_handler_cf.google_service_account_email
   ack_deadline_seconds       = 10
   is_deadletter_subscription = true
   filter                     = <<EOT
