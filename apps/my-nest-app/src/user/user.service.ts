@@ -8,6 +8,7 @@ import { StorageService } from '@poc-gcp/storage';
 import { CloudTasksService } from '@poc-gcp/cloud-tasks';
 import { ConfigType } from '@nestjs/config';
 import userConfig from './user.config';
+import { CloudEventService, CloudEventTypes, ProtobufKey, ProtobufService } from '@poc-gcp/common';
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
@@ -17,6 +18,7 @@ export class UserService {
     private readonly storageService: StorageService,
     private readonly csvProcessorService: CsvProcessorService,
     private readonly cloudTaskService: CloudTasksService,
+    private readonly protobufService: ProtobufService,
     @Inject(userConfig.KEY)
     private readonly config: ConfigType<typeof userConfig>
   ) {}
@@ -104,10 +106,25 @@ export class UserService {
       projectId,
       topicName
     );
+
+    const importPayload={name:new Date().toISOString()}
+    const cloudEvent = CloudEventService.createEvent(
+      CloudEventTypes.OutboxEvent,
+      '/poc-gcp/outbox',
+      importPayload
+    );
+
+    const dataBuffers: Buffer[] = [];
+    const dataBuffer = this.protobufService.encode(
+      ProtobufKey.CloudEventMessage,
+      cloudEvent
+    );
+    dataBuffers.push(dataBuffer);
+
     const name=await this.cloudTaskService.publishTask(
       taskQueueName,
       publishUrl,
-      PubSubService.constructPublishBody(["a",new Date().toISOString()])
+      PubSubService.constructPublishBody(dataBuffers)
     );
     return name;
   }

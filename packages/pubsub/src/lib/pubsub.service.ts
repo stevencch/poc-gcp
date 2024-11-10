@@ -48,11 +48,11 @@ export class PubSubService {
   }
 
   static constructPublishBody(
-    data: string[]
+    dataBuffers: Buffer[]
   ): protos.google.pubsub.v1.IPublishRequest {
     return {
-      messages: data.map((d) => ({
-        data: d,
+      messages: dataBuffers.map((dataBuffer) => ({
+        data: Buffer.from(dataBuffer).toString('base64'),
       })),
     };
   }

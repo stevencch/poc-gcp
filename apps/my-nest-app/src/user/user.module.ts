@@ -8,6 +8,7 @@ import { CsvProcessorModule } from '@poc-gcp/csv-processor';
 import { CloudTasksModule } from '@poc-gcp/cloud-tasks';
 import { ConfigModule } from '@nestjs/config';
 import userConfig from './user.config';
+import { CommonModule } from '@poc-gcp/common';
 @Module({
   imports: [
     MssqlModule,
@@ -15,6 +16,7 @@ import userConfig from './user.config';
     StorageModule,
     CsvProcessorModule,
     CloudTasksModule,
+    CommonModule,
     ConfigModule.forRoot({
       load: [userConfig],
     }),

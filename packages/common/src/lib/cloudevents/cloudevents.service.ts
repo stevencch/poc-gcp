@@ -19,7 +19,7 @@ export enum CloudEventTypes {
 
 export interface CloudEventTypesMap {
   [CloudEventTypes.MockImportEvent]: MockPayload;
-  [CloudEventTypes.ProductWrittenEvent]: OutboxItem_WIP;
+  [CloudEventTypes.OutboxEvent]: OutboxItem_WIP;
 }
 
 const cloudEventSchemaMap = new Map<CloudEventTypes, SchemaKey>([
@@ -30,7 +30,7 @@ const cloudEventSchemaMap = new Map<CloudEventTypes, SchemaKey>([
     SchemaKey.ProductInformationImportPayload,
   ],
   [CloudEventTypes.PimsImportEvent, SchemaKey.PimsImportPayload],
-  [CloudEventTypes.ProductWrittenEvent, SchemaKey.OutboxItemPayload],
+  [CloudEventTypes.OutboxEvent, SchemaKey.OutboxItemPayload],
 ]);
 
 @Injectable()
