@@ -28,6 +28,7 @@
     "@commercetools/sdk-client-v2": "^2.5.0",
     "@google-cloud/cloud-sql-connector": "^1.4.0",
     "@google-cloud/firestore": "^7.10.0",
+    "@google-cloud/functions-framework": "^3.4.2",
     "@google-cloud/pubsub": "^4.8.0",
     "@google-cloud/storage": "^7.14.0",
     "@google-cloud/tasks": "^5.5.1",
@@ -44,7 +45,8 @@
     "pg": "^8.13.1",
     "protobufjs": "^7.4.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.0",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

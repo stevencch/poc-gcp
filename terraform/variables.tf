@@ -38,3 +38,9 @@ variable "project_images" {
   }))
   default = {}
 }
+
+
+variable "cwr_gcp_common_workspace" {
+  type = string
+}
+

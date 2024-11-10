@@ -43,4 +43,27 @@ module "orderhandler_subscription" {
 }
 
 
+module "core_deadletter_topic" {
+  source                     = "./modules/gcp/pubsub_topic"
+  name                       = "core"
+  gcp_project_id             = var.gcp_project_id
+  message_retention_duration = "604800s"
+  is_deadletter_topic        = true
+}
+
+
+module "core_deadletter_subscription" {
+  source                     = "./modules/gcp/pubsub_subscription"
+  name                       = "deliveryoptions"
+  topic                      = module.core_deadletter_topic.name
+  endpoint                   = data.tfe_outputs.common.nonsensitive_values.error_handler_url
+  service_account_email      = data.tfe_outputs.common.nonsensitive_values.error_handler_service_account_email
+  ack_deadline_seconds       = 10
+  is_deadletter_subscription = true
+  filter                     = <<EOT
+    attributes.CloudPubSubDeadLetterSourceSubscription = "${module.orderhandler_subscription.subscription_name}"
+  EOT
+}
+
+
 

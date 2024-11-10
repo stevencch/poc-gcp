@@ -5,7 +5,7 @@ env:
   WORKLOAD_IDENTITY_PROVIDER: projects/1046924480273/locations/global/workloadIdentityPools/test-id-pool/providers/cwr-gcp-glb-oidc-ordrfmt
   SERVICE_ACCOUNT_EMAIL: sa-pool@poc-gcp-439306.iam.gserviceaccount.com
   TF_DIR: './terraform'
-
+  TF_VAR_cwr_gcp_common_workspace: cwr-gcp-common-${{ github.base_ref || github.ref_name }}
 on:
   push:
     branches:
