@@ -143,8 +143,8 @@ jobs:
 
       - name: Build
         id: build
-        run: npm run build
-        
+        run: npm run build:error-handler
+
       - name: Terraform Apply all
         id: apply
         env:
