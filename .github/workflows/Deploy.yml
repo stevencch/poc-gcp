@@ -145,11 +145,11 @@ jobs:
         id: build
         run: npm run build:error-handler
 
-      - name: Print folders
-        run: cat "$GOOGLE_GHA_CREDS_PATH"
+      # - name: Print folders
+      #   run: cat "$GOOGLE_GHA_CREDS_PATH"
 
-      - name: Print JSON content
-        run: find . -type d
+      # - name: Print JSON content
+      #   run: find . -type d
         
 
       - name: Terraform Apply all
