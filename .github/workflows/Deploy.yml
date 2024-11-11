@@ -90,6 +90,8 @@ jobs:
         run: |
           pw=$(pwd)
           echo "$pw"
+          cd /home/runner/work/poc-gcp/poc-gcp/dist/apps/errorHandler
+          tree
           echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
           
       - name: Print JSON content
