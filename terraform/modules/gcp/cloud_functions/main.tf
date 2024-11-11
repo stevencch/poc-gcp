@@ -12,7 +12,7 @@ resource "google_project_iam_member" "function_sa_iam_binding" {
 data "archive_file" "default" {
   type        = "zip"
   output_path = "${path.module}/../deploy/${var.object_name}.zip"
-  source_dir = "${path.module}/error-handler/"
+  source_dir  = "${path.module}/error-handler/"
 }
 
 resource "google_storage_bucket_object" "function_zip" {

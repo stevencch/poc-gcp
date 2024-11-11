@@ -9,7 +9,7 @@ export class ErrorHandlerService {
   constructor(private readonly firestoreService: FirestoreService) {}
 
   async process(message: Message<DeadLetterAttributes>): Promise<void> {
-    this.logger.log('Processing started');
+    this.logger.log('Processing started!');
     await this.firestoreService.insertDeadLetterMessage(message);
     this.logger.log('Processing finished');
   }
