@@ -8,8 +8,12 @@
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
+      "dependsOn": [
+        "build"
+      ],
       "options": {
-        "buildTarget": "error-handler:build"
+        "buildTarget": "error-handler:build",
+        "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
@@ -19,6 +23,14 @@
           "buildTarget": "error-handler:build:production"
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/error-handler/Dockerfile . -t error-handler"
+    },
+    "docker-run": {
+      "dependsOn": ["docker-build"],
+      "command": "docker run -it --init --rm -p 4113:4113 error-handler"
     }
   }
 }

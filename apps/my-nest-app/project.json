@@ -28,7 +28,7 @@
     },
     "docker-run": {
       "dependsOn": ["docker-build"],
-      "command": "docker run -it --init --rm -p 4112:4112 my-nest-app"
+      "command": "docker run -it --init --rm -p 4111:4111 my-nest-app"
     }
   }
 }

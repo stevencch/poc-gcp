@@ -4,14 +4,14 @@
 FROM docker.io/node:lts-slim
 
 ENV NODE_ENV=production
-ENV PORT=4112
+ENV PORT=4113
 ENV HOST=0.0.0.0
 
 USER node
 WORKDIR /home/node
 
-COPY --chown=node:node dist/apps/myapp1 myapp1
+COPY --chown=node:node dist/apps/error-handler error-handler
 
-RUN npm ci --prefix myapp1 --omit=dev --no-audit --no-fund
+RUN npm ci --prefix error-handler --omit=dev --no-audit --no-fund
 
-CMD [ "node", "myapp1/main.js" ]
+CMD [ "node", "error-handler/main.js" ]
