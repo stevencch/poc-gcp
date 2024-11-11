@@ -151,6 +151,8 @@ jobs:
       # - name: Print JSON content
       #   run: find . -type d
         
+      - name: Print JSON content
+        run: pwd
 
       - name: Terraform Apply all
         id: apply
