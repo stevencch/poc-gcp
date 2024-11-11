@@ -1,0 +1,26 @@
+{
+  "name": "errorHandler",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/errorHandler/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "errorHandler:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "errorHandler:build:development"
+        },
+        "production": {
+          "buildTarget": "errorHandler:build:production"
+        }
+      }
+    }
+  }
+}

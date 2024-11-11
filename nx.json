@@ -39,7 +39,7 @@
         "apps/my-nest-app-e2e/**/*",
         "apps/myapp1-e2e/**/*",
         "apps/myjob1-e2e/**/*",
-        "apps/error-handler-e2e/**/*"
+        "apps/errorHandler-e2e/**/*"
       ]
     },
     {

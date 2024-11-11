@@ -1,17 +1,17 @@
 {
-  "name": "error-handler-e2e",
+  "name": "errorHandler-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "implicitDependencies": ["error-handler"],
+  "implicitDependencies": ["errorHandler"],
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
       "options": {
-        "jestConfig": "apps/error-handler-e2e/jest.config.ts",
+        "jestConfig": "apps/errorHandler-e2e/jest.config.ts",
         "passWithNoTests": true
       },
-      "dependsOn": ["error-handler:build"]
+      "dependsOn": ["errorHandler:build"]
     }
   }
 }
