@@ -5,11 +5,13 @@ import { CommercetoolsModule } from '@poc-gcp/commercetools';
 import { DatabaseModule } from '@poc-gcp/database';
 import { FirestoreModule } from '@poc-gcp/firestore';
 import { CommonModule } from '@poc-gcp/common';
+import { DeadLetterModule } from '@poc-gcp/dead-letter';
 @Module({
   imports:[CommercetoolsModule,
     DatabaseModule,
     FirestoreModule,
-    CommonModule
+    CommonModule,
+    DeadLetterModule
   ],
   controllers: [PaymentController],
   providers: [PaymentService],
