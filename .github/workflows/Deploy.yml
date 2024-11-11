@@ -87,8 +87,8 @@ jobs:
         run: |
           pw=$(pwd)
           echo "$pw"
-          cd dist/apps/error-handler
-          ls -a
+          cd \
+          tree
           echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
           
       - name: Print JSON content
