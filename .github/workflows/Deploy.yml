@@ -83,6 +83,15 @@ jobs:
         with:
           cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
 
+      - name: set pwd
+        run: |
+          pw=$(pwd)
+          cat "$pw"
+          echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
+          
+      - name: Print JSON content
+        run: pwd
+        
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check -recursive
@@ -145,11 +154,6 @@ jobs:
         id: build
         run: npm run build:error-handler
       
-      - name: set pwd
-        run: |
-          pw=$(pwd)
-          cat "$pw"
-          echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
 
 
       # - name: Print folders
@@ -158,8 +162,7 @@ jobs:
       # - name: Print JSON content
       #   run: find . -type d
         
-      - name: Print JSON content
-        run: pwd
+
 
       - name: Terraform Apply all
         id: apply
