@@ -90,7 +90,7 @@ jobs:
         run: |
           pw=$(pwd)
           echo "$pw"
-          cd dist
+          cd /home/runner/work/poc-gcp/poc-gcp/dist/apps/error-handler
           tree
           echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
           
