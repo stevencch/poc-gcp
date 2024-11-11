@@ -39,3 +39,7 @@ variable "available_cpu" {
   type    = number
   default = null
 }
+
+variable "code_path" {
+  type = string
+}

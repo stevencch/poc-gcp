@@ -11,8 +11,8 @@ resource "google_project_iam_member" "function_sa_iam_binding" {
 
 data "archive_file" "default" {
   type        = "zip"
-  output_path = "${abspath(path.module)}/deploy/${var.object_name}.zip"
-  source_dir  = "${abspath(path.module)}/../dist/apps/${var.object_name}/"
+  output_path = "${var.code_path}/deploy/${var.object_name}.zip"
+  source_dir  = "${var.code_path}/dist/apps/${var.object_name}/"
 }
 
 resource "google_storage_bucket_object" "function_zip" {

@@ -144,6 +144,13 @@ jobs:
       - name: Build
         id: build
         run: npm run build:error-handler
+      
+      - name: set pwd
+        run: |
+          pw=$(pwd)
+          cat "$pw"
+          echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
+
 
       # - name: Print folders
       #   run: cat "$GOOGLE_GHA_CREDS_PATH"

@@ -44,3 +44,7 @@ variable "cwr_gcp_common_workspace" {
   type = string
 }
 
+variable "code_path" {
+  type = string
+}
+

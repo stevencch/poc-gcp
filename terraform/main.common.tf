@@ -45,6 +45,7 @@ module "error_handler_cf" {
   object_name                      = "error-handler"
   max_instance_request_concurrency = 10
   available_cpu                    = 1
+  code_path                        = var.code_path
 
   env_vars = {
     NO_COLOR      = "true"
