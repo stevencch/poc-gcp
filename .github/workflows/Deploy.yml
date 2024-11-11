@@ -86,12 +86,12 @@ jobs:
       - name: set pwd
         run: |
           pw=$(pwd)
-          cat "$pw"
+          echo "$pw"
           echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
           
       - name: Print JSON content
         run: pwd
-        
+
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check -recursive
