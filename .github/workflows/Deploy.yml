@@ -65,10 +65,6 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build
-        id: build
-        run: npm run build
-
       # - name: Set up Google Auth
       #   id: auth
       #   uses: google-github-actions/auth@v2
@@ -145,6 +141,10 @@ jobs:
           chmod +x ./deploy/build-push-docker.sh
           ./deploy/build-push-docker.sh
 
+      - name: Build
+        id: build
+        run: npm run build
+        
       - name: Terraform Apply all
         id: apply
         env:
