@@ -87,7 +87,6 @@ jobs:
         run: |
           pw=$(pwd)
           echo "$pw"
-          cd \
           tree
           echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
           
