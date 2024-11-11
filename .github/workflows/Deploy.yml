@@ -65,9 +65,9 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build
-        id: build
-        run: npm run build:errorHandler
+      # - name: Build
+      #   id: build
+      #   run: npm run build:errorHandler
       # - name: Set up Google Auth
       #   id: auth
       #   uses: google-github-actions/auth@v2
@@ -90,8 +90,6 @@ jobs:
         run: |
           pw=$(pwd)
           echo "$pw"
-          cd /home/runner/work/poc-gcp/poc-gcp/dist/apps/errorHandler
-          tree
           echo "TF_VAR_code_path=$pw" >> $GITHUB_ENV
           
       - name: Print JSON content
