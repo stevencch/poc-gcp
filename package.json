@@ -5,7 +5,7 @@
   "scripts": {
     "docker": "docker run -it --rm -p 4112:4112 --env-file ./.env my-nest-app",
     "docker:build": "npm run build && docker build -t my-nest-app:latest -f ./apps/my-nest-app/Dockerfile .",
-    "build:error-handler": "nx run error-handler:build",
+    "build:errorHandler": "nx run errorHandler:build",
     "build": "nx affected --target=build",
     "test": "nx affected --target=test --exclude=*-e2e",
     "test:e2e": "nx affected --target=e2e",

@@ -67,7 +67,7 @@ jobs:
 
       - name: Build
         id: build
-        run: npm run build:error-handler
+        run: npm run build:errorHandler
       # - name: Set up Google Auth
       #   id: auth
       #   uses: google-github-actions/auth@v2
