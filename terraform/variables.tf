@@ -48,7 +48,4 @@ variable "code_path" {
   type = string
 }
 
-variable "orderhandler_subscription_name" {
-  type    = string
-  default = ""
-}
+
