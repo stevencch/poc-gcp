@@ -61,7 +61,7 @@ module "core_deadletter_subscription" {
   ack_deadline_seconds       = 10
   is_deadletter_subscription = true
   filter                     = <<EOT
-    attributes.CloudPubSubDeadLetterSourceSubscription = "${module.orderhandler_subscription.subscription_name}"
+    attributes.CloudPubSubDeadLetterSourceSubscription = "orderhandler"
   EOT
 }
 
