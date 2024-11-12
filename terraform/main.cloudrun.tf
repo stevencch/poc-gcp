@@ -93,7 +93,7 @@ module "myapp1_cloud_run_service" {
     #DB_IP                                         = module.mypg.instance_public_ip
     DB_PW                      = var.db_pw
     DATABASE_ID                = module.firestore.name
-    PAYMENT_NOTIFICATION_TOPIC = module.payment_notifications_topic.id
+    PAYMENT_NOTIFICATION_TOPIC = var.orderhandler_subscription_name
   }
   required_roles = [
     "roles/iam.serviceAccountUser",
