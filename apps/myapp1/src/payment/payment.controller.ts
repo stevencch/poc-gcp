@@ -147,7 +147,7 @@ export class PaymentController {
         data: Buffer.from("request.body").toString('base64'),
         attributes: {},
       },
-      subscription: `/subscriptions/orderhandler`
+      subscription: `/subscriptions/${process.env['PAYMENT_NOTIFICATION_TOPIC']}`
     };
     await this.deadLetterService.publishToDeadLetter(
       { type:ErrorType.EXTRACTION, message:"test message" },
