@@ -44,7 +44,7 @@ export class UserController {
 
   @Get("write/:file")
   async write(@Param('file') file: string) {
-    var url= await this.userService.generateCsv(file);
+    var url= await this.userService.generateCsv(file+".csv");
     return url;
   }
 

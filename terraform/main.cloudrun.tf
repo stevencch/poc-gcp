@@ -48,7 +48,8 @@ module "my-nest-app_cloud_run_service" {
     "roles/iam.serviceAccountUser",
     "roles/cloudtasks.enqueuer",
     "roles/pubsub.publisher",
-    "roles/storage.admin"
+    "roles/storage.admin",
+    "roles/bigquery.admin"
   ]
 }
 
