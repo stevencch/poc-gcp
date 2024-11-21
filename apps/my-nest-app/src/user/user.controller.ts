@@ -42,6 +42,12 @@ export class UserController {
     return await this.userService.readfile();
   }
 
+  @Get("write/:file")
+  async write(@Param('file') file: string) {
+    var url= await this.userService.generateCsv(file);
+    return url;
+  }
+
   @Get("test/task/run")
   async testTask() {
     var name=await this.userService.testTask();

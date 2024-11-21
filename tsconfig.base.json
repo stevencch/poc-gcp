@@ -19,6 +19,7 @@
       "@poc-gcp/commercetools": ["packages/commercetools/src/index.ts"],
       "@poc-gcp/common": ["packages/common/src/index.ts"],
       "@poc-gcp/csv-processor": ["packages/csv-processor/src/index.ts"],
+      "@poc-gcp/ct": ["packages/ct/src/index.ts"],
       "@poc-gcp/database": ["packages/database/src/index.ts"],
       "@poc-gcp/dead-letter": ["packages/dead-letter/src/index.ts"],
       "@poc-gcp/firestore": ["packages/firestore/src/index.ts"],
@@ -26,7 +27,8 @@
       "@poc-gcp/mssql": ["packages/mssql/src/index.ts"],
       "@poc-gcp/pubsub": ["packages/pubsub/src/index.ts"],
       "@poc-gcp/storage": ["packages/storage/src/index.ts"],
-      "@poc-gcp/vault": ["packages/vault/src/index.ts"]
+      "@poc-gcp/vault": ["packages/vault/src/index.ts"],
+      "@cw/cart-service/*": ["apps/my-nest-app/src/orders/*"],
     }
   },
   "exclude": ["node_modules", "tmp"]

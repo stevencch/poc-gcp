@@ -9,6 +9,8 @@ import { CloudTasksService } from '@poc-gcp/cloud-tasks';
 import { ConfigType } from '@nestjs/config';
 import userConfig from './user.config';
 import { CloudEventService, CloudEventTypes, ProtobufKey, ProtobufService } from '@poc-gcp/common';
+import { createObjectCsvWriter } from 'csv-writer';
+
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
@@ -55,6 +57,24 @@ export class UserService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async generateCsv(filename:string) {
+    const data = [
+      { firstName: 'Alice', lastName: 'New York' },
+      { firstName: 'Bob', lastName: 'Los Angeles' },
+      { firstName: 'Charlie', lastName: 'Chicago' },
+    ];
+    const inputBucket = process.env['INPUT_BUCKET'];
+    const csvWriter = createObjectCsvWriter({
+      path: filename,
+      header: Object.keys(data[0]).map((key) => ({ id: key, title: key })),
+    });
+  
+    await csvWriter.writeRecords(data);
+    this.logger.log('CSV file generated at:', filename);
+    const fileUrl = await this.storageService.uploadCsvToGCS(filename,inputBucket);
+    return fileUrl;
   }
 
   async readfile() {

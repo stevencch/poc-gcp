@@ -6,6 +6,8 @@ import {
 import { Storage } from '@google-cloud/storage';
 import { Readable } from 'stream';
 import { isRunningLocally } from '@poc-gcp/vault';
+import { pipeline } from 'stream/promises';
+import * as fs from 'fs';
 @Injectable()
 export class StorageService {
   private readonly storage: Storage;
@@ -51,5 +53,27 @@ export class StorageService {
     buckets.forEach((bucket) => {
       this.logger.log(bucket.name);
     });
+  }
+
+  public async uploadCsvToGCS(filename: string, bucketName:string) {
+    const bucket = this.storage.bucket(bucketName);
+  const blob = bucket.file(filename);
+  const blobStream = blob.createWriteStream();
+
+  try {
+    // Use pipeline to handle the stream
+    await pipeline(fs.createReadStream(filename), blobStream);
+
+    // Cleanup local file after upload
+    fs.unlinkSync(filename);
+
+    return `gs://${bucketName}/${filename}`;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Failed to upload file to GCS: ${error.message}`);
+    } else {
+      throw new Error(`Failed to upload file to GCS: ${String(error)}`);
+    }
+  }
   }
 }
