@@ -15,6 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@cw/cart-service/*": ["apps/my-nest-app/src/orders/*"],
+      "@poc-gcp/bigquery": ["packages/bigquery/src/index.ts"],
       "@poc-gcp/cloud-tasks": ["packages/cloud-tasks/src/index.ts"],
       "@poc-gcp/commercetools": ["packages/commercetools/src/index.ts"],
       "@poc-gcp/common": ["packages/common/src/index.ts"],
@@ -27,8 +29,7 @@
       "@poc-gcp/mssql": ["packages/mssql/src/index.ts"],
       "@poc-gcp/pubsub": ["packages/pubsub/src/index.ts"],
       "@poc-gcp/storage": ["packages/storage/src/index.ts"],
-      "@poc-gcp/vault": ["packages/vault/src/index.ts"],
-      "@cw/cart-service/*": ["apps/my-nest-app/src/orders/*"],
+      "@poc-gcp/vault": ["packages/vault/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
