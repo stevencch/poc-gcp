@@ -53,4 +53,10 @@ export class UserController {
     var name=await this.userService.testTask();
     return name;
   }
+
+  @Get("test/bigquery")
+  async bigquery() {
+    await this.userService.insertBigQuery();
+    return "ok";
+  }
 }

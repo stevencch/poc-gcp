@@ -10,6 +10,7 @@ import { ConfigType } from '@nestjs/config';
 import userConfig from './user.config';
 import { CloudEventService, CloudEventTypes, ProtobufKey, ProtobufService } from '@poc-gcp/common';
 import { createObjectCsvWriter } from 'csv-writer';
+import { BigQueryService } from '@poc-gcp/bigquery';
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,7 @@ export class UserService {
     private readonly csvProcessorService: CsvProcessorService,
     private readonly cloudTaskService: CloudTasksService,
     private readonly protobufService: ProtobufService,
+    private readonly bigQueryService: BigQueryService,
     @Inject(userConfig.KEY)
     private readonly config: ConfigType<typeof userConfig>
   ) {}
@@ -57,6 +59,10 @@ export class UserService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async insertBigQuery() {
+    await this.bigQueryService.insertData("test",new Date().toISOString());
   }
 
   async generateCsv(filename:string) {

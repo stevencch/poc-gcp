@@ -9,6 +9,7 @@ import { CloudTasksModule } from '@poc-gcp/cloud-tasks';
 import { ConfigModule } from '@nestjs/config';
 import userConfig from './user.config';
 import { CommonModule } from '@poc-gcp/common';
+import { BigqueryModule } from '@poc-gcp/bigquery';
 @Module({
   imports: [
     MssqlModule,
@@ -17,6 +18,7 @@ import { CommonModule } from '@poc-gcp/common';
     CsvProcessorModule,
     CloudTasksModule,
     CommonModule,
+    BigqueryModule,
     ConfigModule.forRoot({
       load: [userConfig],
     }),
