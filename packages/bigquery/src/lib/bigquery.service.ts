@@ -1,15 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { BigQuery } from '@google-cloud/bigquery';
+import { BigQueryConfig } from './bigquery.config';
+import { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class BigQueryService {
   private bigQueryClient: BigQuery;
-
-  constructor() {
+  private readonly logger = new Logger(BigQueryService.name);
+  constructor(
+    @Inject(BigQueryConfig.KEY)
+    private readonly config: ConfigType<typeof BigQueryConfig>,
+  ) {
     this.bigQueryClient = new BigQuery({
-      projectId: '<YOUR_PROJECT_ID>', // Your Google Cloud project ID
-      keyFilename: '<PATH_TO_YOUR_SERVICE_ACCOUNT_KEY_JSON>',
-    });
+
+        projectId: config.projectId
+      });
   }
 
   // Method to insert data into BigQuery table
@@ -21,7 +26,6 @@ export class BigQueryService {
       {
         firstName,
         lastName,
-        createdAt: new Date().toISOString(),
       },
     ];
 
@@ -31,9 +35,9 @@ export class BigQueryService {
         .table(tableId)
         .insert(rows);
 
-      console.log('Data inserted successfully');
+      this.logger.log('Data inserted successfully');
     } catch (error) {
-      console.error('Error inserting data:', error);
+        this.logger.error('Error inserting data:', error);
     }
   }
 }
