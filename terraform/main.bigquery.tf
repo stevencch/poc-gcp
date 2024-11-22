@@ -3,7 +3,7 @@ module "my-bigquery" {
   project      = var.gcp_project_id
   location     = var.gcp_region
   dataset_name = "customer"
-  table_name   = "data"
+  table_name   = "data1"
   account      = module.my-nest-app_cloud_run_service.google_service_account_email
 }
 

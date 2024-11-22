@@ -19,7 +19,7 @@ export class BigQueryService {
   // Method to insert data into BigQuery table
   async insertData(firstName: string, lastName: string) {
     const datasetId = 'customer'; // BigQuery dataset ID
-    const tableId = 'data'; // BigQuery table ID
+    const tableId = 'data1'; // BigQuery table ID
 
     const rows = [
       {
