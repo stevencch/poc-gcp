@@ -6,6 +6,7 @@ env:
   SERVICE_ACCOUNT_EMAIL: sa-pool@poc-gcp-439306.iam.gserviceaccount.com
   TF_DIR: './terraform'
   TF_VAR_cwr_gcp_common_workspace: cwr-gcp-common-${{ github.base_ref || github.ref_name }}
+  TF_VAR_monitoring_notification_emails_csv: ${{ vars.TF_VAR_MONITORING_NOTIFICATION_EMAILS_CSV }}
 on:
   push:
     branches:

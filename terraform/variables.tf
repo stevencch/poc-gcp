@@ -49,3 +49,7 @@ variable "code_path" {
 }
 
 
+variable "monitoring_notification_emails_csv" {
+  type = string
+}
+
