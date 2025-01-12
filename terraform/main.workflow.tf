@@ -7,3 +7,8 @@ module "import_redrive_workflow" {
   service_account_email = google_service_account.workflows.email
   source_contents       = file("${path.root}/workflows/test.tftpl")
 }
+
+resource "google_service_account" "workflows" {
+  account_id   = "inv-workflows-sa"
+  display_name = "Workflows Service Account for inventory-ms"
+}
