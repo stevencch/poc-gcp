@@ -1,0 +1,45 @@
+get_vault_secrets:
+  steps:
+    - init:
+        assign:
+          - base_url: ${vault_base_url}
+          - mount_point: ${vault_mount_point}
+          - auth_url: $${base_url + "/v1/auth/" + mount_point + "/login"}
+          - secret_path: ${vault_secret_path}
+          - vault_role: ${vault_role}
+          - vault_namespace: ${vault_namespace}
+          - gcp_role: $${"vault/" + vault_role}
+          - service_account: ${service_account_email}
+          - jwt_claim:
+              aud: $${gcp_role}
+              exp: $${int(sys.now() + 600)}
+              sub: $${service_account}
+    - getSignedJwt:
+        call: http.post
+        args:
+            url: $${"https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/" + service_account + ":signJwt"}
+            auth:
+                type: OAuth2
+            body:
+                payload: $${json.encode_to_string(jwt_claim)}
+        result: signed_jwt_result
+    - authenticateVault:
+        call: http.post
+        args:
+          url: $${auth_url}
+          headers:
+            X-Vault-Namespace: $${vault_namespace}
+          body:
+            role: $${vault_role}
+            jwt: $${signed_jwt_result.body.signedJwt}
+        result: vault_token
+    - getSecrets:
+        call: http.get
+        args:
+          url: $${base_url + "/v1/" + secret_path}
+          headers:
+            X-Vault-Token: $${vault_token.body.auth.client_token}
+            X-Vault-Namespace: $${vault_namespace}
+        result: secret_data
+    - returnSecret:
+        return: $${secret_data.body.data.data}

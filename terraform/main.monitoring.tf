@@ -18,7 +18,7 @@ locals {
 module "my-nest-app_request_latency_alert" {
   source         = "./modules/gcp/monitoring_alert"
   gcp_project_id = var.gcp_project_id
-  display_name   = "${module.my-nest-app_cloud_run_service.name} - Median request latency > 100ms over 5 minutes"
+  display_name   = "${module.my-nest-app_cloud_run_service.name} - Median request latency > 200ms over 1 minutes"
   severity       = "WARNING"
   condition = {
     threshold = {
@@ -28,12 +28,12 @@ module "my-nest-app_request_latency_alert" {
         metric.type = "run.googleapis.com/request_latencies"
       EOT
       comparison_type      = "COMPARISON_GT"
-      threshold_value      = 100 # ms
-      alignment_period     = "30s"
+      threshold_value      = 200 # ms
+      alignment_period     = "60s"
       per_series_aligner   = "ALIGN_DELTA"
       cross_series_reducer = "REDUCE_PERCENTILE_50"
     }
-    retest_period = "30s"
+    retest_period = "60s"
   }
   notification_channels = local.notification_channel_names
 }

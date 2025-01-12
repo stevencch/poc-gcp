@@ -1,0 +1,33 @@
+main:
+    params: [event]
+    steps:
+        - init:
+            assign:
+                - project_id: ${project_id}
+                - event_bucket: $${event.data.bucket}
+                - event_file: $${event.data.name}
+                - target_bucket: ${target_bucket_name}
+                - job_name: ${job_name}
+                - job_location: ${job_location}
+        - check_input_file:
+            switch:
+                - condition: $${event_bucket == target_bucket}
+                  next: run_job
+                - condition: true
+                  next: end
+        - run_job:
+            call: googleapis.run.v1.namespaces.jobs.run
+            args:
+                name: $${"namespaces/" + project_id + "/jobs/" + job_name}
+                location: $${job_location}
+                body:
+                    overrides:
+                        containerOverrides:
+                            env:
+                                - name: INPUT_BUCKET
+                                  value: $${event_bucket}
+                                - name: INPUT_FILE
+                                  value: $${event_file}
+            result: job_execution
+        - finish:
+            return: $${job_execution}
