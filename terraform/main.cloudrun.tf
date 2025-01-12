@@ -44,7 +44,7 @@ module "my-nest-app_cloud_run_service" {
     INPUT_FILE            = "test.csv"
     TASK_QUEUE_NAME       = module.import_retail_full_ctqueue.name
     NEW_RELIC_APP_NAME    = "poc-gcp"
-    NEW_RELIC_LICENSE_KEY = "ce472b59adb8ae871a7002d9b5144966FFFFNRAL"
+    NEW_RELIC_LICENSE_KEY = var.new_relice_license_key
   }
   required_roles = [
     "roles/iam.serviceAccountUser",

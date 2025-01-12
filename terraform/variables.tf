@@ -53,3 +53,8 @@ variable "monitoring_notification_emails_csv" {
   type = string
 }
 
+variable "new_relice_license_key" {
+  type    = string
+  default = ""
+}
+
