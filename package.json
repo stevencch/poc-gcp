@@ -45,6 +45,7 @@
     "cloudevents": "^8.0.2",
     "csv-writer": "^1.6.0",
     "http-proxy-middleware": "^3.0.3",
+    "ioredis": "^5.4.2",
     "knex": "^3.1.0",
     "mssql": "^11.0.1",
     "nestjs-pino": "^4.2.0",
