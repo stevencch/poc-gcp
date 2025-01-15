@@ -19,10 +19,6 @@ resource "google_compute_instance" "default_linux" {
     }
   }
 
-  // Local SSD disk
-  scratch_disk {
-    interface = "NVME"
-  }
 
   network_interface {
     network = "default"
@@ -47,14 +43,14 @@ resource "google_compute_instance" "default_linux" {
 
 resource "google_compute_instance" "default_win" {
   name         = "my-instance2"
-  machine_type = "n2-standard-2"
+  machine_type = "e2-micro"
   zone         = "us-central1-a"
 
   tags = ["foo", "bar"]
 
   boot_disk {
     initialize_params {
-      image = "projects/windows-sql-cloud/global/images/sql-2022-standard-windows-2025-dc-v20241212"
+      image = "windows-cloud/windows-server-2016"
       labels = {
         my_label = "value"
       }
@@ -62,9 +58,6 @@ resource "google_compute_instance" "default_win" {
   }
 
   // Local SSD disk
-  scratch_disk {
-    interface = "NVME"
-  }
 
   network_interface {
     network = "default"
