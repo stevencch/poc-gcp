@@ -8,9 +8,7 @@ type ErrorType = {
 
 export const getRedisClient = (
   redisHost: string,
-  redisPort: number,
-  redisCert: string,
-  redisDBNumber: number
+  redisPort: number
 ) => {
   const logger = new Logger('RedisClient');
   logger.debug('Connected to production redis');
@@ -18,10 +16,6 @@ export const getRedisClient = (
   const client = new Redis({
     host: redisHost,
     port: redisPort,
-    tls: {
-      ca: redisCert,
-    },
-    db: redisDBNumber,
     retryStrategy: (times: number) => {
       const delay = Math.min(times * 50, 2000);
       logger.warn(`Redis connection attempt ${times}, retrying in ${delay}ms`);

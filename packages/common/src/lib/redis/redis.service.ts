@@ -1,14 +1,18 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Redis } from 'ioredis';
+import { getRedisClient } from './redis.client';
 
 @Injectable()
 export class RedisService {
   private readonly logger = new Logger(RedisService.name);
-
+  private readonly redis: Redis;
   constructor(
-    @Inject('WRITER_REDIS') private readonly writerRedis: Redis,
-    @Inject('READER_REDIS') private readonly readerRedis: Redis
-  ) {}
+  ) {
+    this.redis= getRedisClient(
+                  process.env["READER_REDIS_HOST_ID"] || '10.86.29.59',
+                  6378
+                )
+  }
 
   /**
    * Returns a single value
@@ -16,7 +20,7 @@ export class RedisService {
    * @returns 
    */
   async get(key: string): Promise<string | undefined> {
-    const value = (await this.readerRedis.get(key)) || undefined;
+    const value = (await this.redis.get(key)) || undefined;
     return value;
   }
 
@@ -29,7 +33,7 @@ export class RedisService {
     if(keys.length === 0) {
       return {};
     }
-    const values = await this.readerRedis.mget(keys);
+    const values = await this.redis.mget(keys);
     const kv = Object.fromEntries(
       keys.map((key, index) => [key, values[index] ? values[index] : undefined])
     );
@@ -58,7 +62,7 @@ export class RedisService {
         expiryInSeconds = 60 * 60;
         break;
     }
-    await this.writerRedis.set(key, value, 'EX', expiryInSeconds);
+    await this.redis.set(key, value, 'EX', expiryInSeconds);
   }
 
   async updateKey(

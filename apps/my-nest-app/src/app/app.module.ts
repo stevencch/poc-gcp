@@ -7,12 +7,12 @@ import { OrdersModule } from '../orders/orders.module';
 import { NewRelicService } from './new-relic.service';
 import { LoggerModule } from 'nestjs-pino';
 import { loggerOptions } from './logger';
-import { RedisModule } from '@poc-gcp/common';
+import { RedisModule, RedisService } from '@poc-gcp/common';
 
 @Module({
-  imports:[LoggerModule.forRoot(loggerOptions),UserModule,OrdersModule, RedisModule,
+  imports:[LoggerModule.forRoot(loggerOptions),UserModule,OrdersModule, RedisModule
   ],
   controllers: [AppController],
-  providers: [AppService, NewRelicService],
+  providers: [AppService, NewRelicService,RedisService]
 })
 export class AppModule {}
