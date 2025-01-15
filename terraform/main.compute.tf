@@ -54,7 +54,7 @@ resource "google_compute_instance" "default_win" {
 
   boot_disk {
     initialize_params {
-      image = "sql-2016-standard-windows-2016-dc-v20241212"
+      image = "projects/windows-sql-cloud/global/images/sql-2022-standard-windows-2025-dc-v20241212"
       labels = {
         my_label = "value"
       }
