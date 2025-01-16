@@ -41,38 +41,38 @@ resource "google_compute_instance" "default_linux" {
   }
 }
 
-resource "google_compute_instance" "default_win" {
-  name         = "my-instance2"
-  machine_type = "n2-standard-2"
-  zone         = "us-central1-a"
+# resource "google_compute_instance" "default_win" {
+#   name         = "my-instance2"
+#   machine_type = "n2-standard-2"
+#   zone         = "us-central1-a"
 
-  tags = ["foo", "bar"]
+#   tags = ["foo", "bar"]
 
-  boot_disk {
-    initialize_params {
-      image = "projects/windows-sql-cloud/global/images/sql-2022-standard-windows-2025-dc-v20241212"
-      labels = {
-        my_label = "value"
-      }
-    }
-  }
+#   boot_disk {
+#     initialize_params {
+#       image = "projects/windows-sql-cloud/global/images/sql-2022-standard-windows-2025-dc-v20241212"
+#       labels = {
+#         my_label = "value"
+#       }
+#     }
+#   }
 
-  // Local SSD disk
+#   // Local SSD disk
 
-  network_interface {
-    network = "default"
+#   network_interface {
+#     network = "default"
 
-    access_config {
-      // Ephemeral public IP
-    }
-  }
+#     access_config {
+#       // Ephemeral public IP
+#     }
+#   }
 
-  metadata = {
-    foo = "bar"
-  }
-  service_account {
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = google_service_account.default.email
-    scopes = ["cloud-platform"]
-  }
-}
+#   metadata = {
+#     foo = "bar"
+#   }
+#   service_account {
+#     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+#     email  = google_service_account.default.email
+#     scopes = ["cloud-platform"]
+#   }
+# }
