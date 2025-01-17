@@ -3,6 +3,7 @@ module "instance_simple" {
   project_id    = var.gcp_project_id
   region        = "us-central1"
   zone          = "us-central1-a"
+  hostname      = "simple-a"
   subnetwork    = module.network_example.network_01_subnets.0
   num_instances = 1
   service_account = {
@@ -16,6 +17,7 @@ module "instance_simple1" {
   project_id    = var.gcp_project_id
   region        = "us-central1"
   zone          = "us-central1-a"
+  hostname      = "simple-b"
   subnetwork    = module.network_example.network_02_subnets.0
   num_instances = 1
   service_account = {

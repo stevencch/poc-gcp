@@ -34,7 +34,7 @@ module "compute_instance" {
   subnetwork          = var.subnetwork
   subnetwork_project  = var.project_id
   num_instances       = var.num_instances
-  hostname            = "instance-simple"
+  hostname            = var.hostname
   instance_template   = module.instance_template.self_link
   deletion_protection = false
 
