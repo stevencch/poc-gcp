@@ -4,5 +4,5 @@ module "instance_simple" {
   region          = "us-central1"
   subnetwork      = google_compute_subnetwork.main.self_link
   num_instances   = 4
-  service_account = google_service_account.default.email
+  service_account = google_service_account.default
 }
