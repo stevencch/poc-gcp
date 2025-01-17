@@ -30,8 +30,8 @@ module "instance_simple1" {
 module "instance_simple2" {
   source        = "./modules/compute_instance/simple"
   project_id    = var.gcp_project_id
-  region        = "us-central1"
-  zone          = "us-central1-a"
+  region        = "us-east1"
+  zone          = "us-east1-a"
   hostname      = "simple-c"
   subnetwork    = google_compute_subnetwork.main.self_link
   num_instances = 1
