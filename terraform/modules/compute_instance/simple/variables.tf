@@ -63,3 +63,9 @@ variable "service_account" {
 variable "hostname" {
   description = "The hostname of the instances"
 }
+
+variable "machine_type" {
+  description = "The machine type to use for the instances"
+  default     = "e2-micro"
+
+}

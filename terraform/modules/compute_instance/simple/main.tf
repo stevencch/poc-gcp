@@ -23,6 +23,7 @@ module "instance_template" {
   subnetwork         = var.subnetwork
   subnetwork_project = var.project_id
   service_account    = var.service_account
+  machine_type       = var.machine_type
 }
 
 module "compute_instance" {
