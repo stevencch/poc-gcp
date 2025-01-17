@@ -27,7 +27,7 @@ module "instance_simple1" {
 }
 
 
-module "instance_simple1" {
+module "instance_simple2" {
   source        = "./modules/compute_instance/simple"
   project_id    = var.gcp_project_id
   region        = "us-central1"
