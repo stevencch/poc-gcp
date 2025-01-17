@@ -17,7 +17,7 @@
 # [START compute_vm_with_multiple_interface]
 resource "google_compute_instance" "default" {
   project      = var.project_id # Replace with your project ID in quotes
-  zone         = "us-central1-b"
+  zone         = "us-central1-a"
   name         = "backend-instance"
   machine_type = "e2-medium"
   boot_disk {
