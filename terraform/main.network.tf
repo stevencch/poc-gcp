@@ -24,3 +24,11 @@ module "network_example" {
   network_01_name = local.network_01_name
   network_02_name = local.network_02_name
 }
+
+
+module "peering1" {
+  source        = "terraform-google-modules/network/google//modules/network-peering"
+  version       = "~> 10.0"
+  local_network = module.network_example.network_01_self_link
+  peer_network  = module.network_example.network_02_self_link # Replace with self link to VPC network "other" in quotes
+}
