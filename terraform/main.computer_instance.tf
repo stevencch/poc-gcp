@@ -4,7 +4,7 @@ module "instance_simple" {
   region        = "us-central1"
   zone          = "us-central1-a"
   subnetwork    = google_compute_subnetwork.main.self_link
-  num_instances = 4
+  num_instances = 1
   service_account = {
     email  = google_service_account.default.email
     scopes = ["cloud-platform"]
