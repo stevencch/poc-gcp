@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-locals {
-  network_01_name = "multi-vpc-a1-01"
-  network_02_name = "multi-vpc-a1-02"
+
+variable "project_id" {
+  description = "The project ID to host the network in"
 }
 
-module "network_example" {
-  source          = "./modules/multi_vpc"
-  project_id      = var.gcp_project_id
-  network_01_name = local.network_01_name
-  network_02_name = local.network_02_name
+variable "network_01_name" {
+  description = "The name of the first VPC network being created"
+}
+
+variable "network_02_name" {
+  description = "The name of the second VPC network being created"
 }

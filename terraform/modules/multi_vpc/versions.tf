@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-locals {
-  network_01_name = "multi-vpc-a1-01"
-  network_02_name = "multi-vpc-a1-02"
-}
 
-module "network_example" {
-  source          = "./modules/multi_vpc"
-  project_id      = var.gcp_project_id
-  network_01_name = local.network_01_name
-  network_02_name = local.network_02_name
+terraform {
+  required_version = ">=0.12.6"
+
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
+    null = {
+      version = ">= 3.0"
+    }
+  }
 }
