@@ -42,3 +42,17 @@ module "instance_simple2" {
   }
   tags = ["web"]
 }
+
+module "instance_simple21" {
+  source        = "./modules/compute_instance/simple"
+  project_id    = var.gcp_project_id
+  region        = "us-east1"
+  hostname      = "simple-d"
+  subnetwork    = google_compute_subnetwork.main1.self_link
+  num_instances = 1
+  service_account = {
+    email  = google_service_account.default.email
+    scopes = ["cloud-platform"]
+  }
+  tags = ["web"]
+}

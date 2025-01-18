@@ -33,3 +33,26 @@ resource "google_compute_subnetwork" "main" {
   ip_cidr_range = "10.128.0.0/20"
   network       = google_compute_network.main.self_link
 }
+
+
+resource "google_compute_network" "main1" {
+  project                 = var.gcp_project_id
+  name                    = "cft-vm-test1-${random_string.suffix.result}"
+  auto_create_subnetworks = "false"
+}
+
+resource "google_compute_subnetwork" "main1" {
+  project       = var.gcp_project_id
+  region        = "us-east1"
+  name          = "cft-vm-test1-${random_string.suffix.result}"
+  ip_cidr_range = "10.88.0.0/20"
+  network       = google_compute_network.main1.self_link
+}
+
+
+module "peering2" {
+  source        = "terraform-google-modules/network/google//modules/network-peering"
+  version       = "~> 10.0"
+  local_network = google_compute_network.main.self_link
+  peer_network  = google_compute_network.main1.self_link # Replace with self link to VPC network "other" in quotes
+}
