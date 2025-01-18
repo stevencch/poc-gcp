@@ -44,7 +44,7 @@ resource "google_compute_instance" "default_linux" {
 resource "google_compute_instance" "default_linux1" {
   name         = "my-instance1-1"
   machine_type = "e2-micro"
-  zone         = "us-east1-a"
+  zone         = "us-east1-b"
 
   tags = ["foo", "bar"]
 
@@ -82,7 +82,7 @@ resource "google_compute_instance" "default_linux1" {
 resource "google_compute_instance" "default_linux2" {
   name         = "my-instance1-2"
   machine_type = "e2-micro"
-  zone         = "us-east1-a"
+  zone         = "us-east1-b"
 
   tags = ["foo", "bar"]
 
