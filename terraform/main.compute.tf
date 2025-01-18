@@ -42,7 +42,7 @@ resource "google_compute_instance" "default_linux" {
 }
 
 resource "google_compute_instance" "default_linux1" {
-  name         = "my-instance1"
+  name         = "my-instance1-1"
   machine_type = "e2-micro"
   zone         = "us-east1-a"
 
@@ -59,7 +59,7 @@ resource "google_compute_instance" "default_linux1" {
 
 
   network_interface {
-    network = google_compute_subnetwork.main
+    network = google_compute_subnetwork.main.name
 
     access_config {
       // Ephemeral public IP
@@ -80,7 +80,7 @@ resource "google_compute_instance" "default_linux1" {
 }
 
 resource "google_compute_instance" "default_linux2" {
-  name         = "my-instance1"
+  name         = "my-instance1-2"
   machine_type = "e2-micro"
   zone         = "us-east1-a"
 
@@ -97,7 +97,7 @@ resource "google_compute_instance" "default_linux2" {
 
 
   network_interface {
-    network = google_compute_subnetwork.main1
+    network = google_compute_subnetwork.main1.name
 
     access_config {
       // Ephemeral public IP
