@@ -59,7 +59,7 @@ resource "google_compute_instance" "default_linux1" {
 
 
   network_interface {
-    network = google_compute_subnetwork.main.name
+    network = google_compute_network.main.name
 
     access_config {
       // Ephemeral public IP
@@ -97,7 +97,7 @@ resource "google_compute_instance" "default_linux2" {
 
 
   network_interface {
-    network = google_compute_subnetwork.main1.name
+    network = google_compute_network.main1.name
 
     access_config {
       // Ephemeral public IP
