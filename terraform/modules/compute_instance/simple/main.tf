@@ -24,6 +24,7 @@ module "instance_template" {
   subnetwork_project = var.project_id
   service_account    = var.service_account
   machine_type       = var.machine_type
+  tags               = var.tags
 }
 
 module "compute_instance" {
@@ -43,4 +44,5 @@ module "compute_instance" {
     nat_ip       = var.nat_ip
     network_tier = var.network_tier
   }, ]
+
 }

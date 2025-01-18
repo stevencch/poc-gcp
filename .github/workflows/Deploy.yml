@@ -114,55 +114,55 @@ jobs:
       - name: Print JSON content
         run: cat "$GOOGLE_GHA_CREDS_PATH"
 
-      - name: Terraform Apply artifact registry
-        id: apply_artifact_registry
-        run: terraform apply --auto-approve -no-color -target="module.artifact_registry"
-        working-directory: ${{ env.TF_DIR }}
+      # - name: Terraform Apply artifact registry
+      #   id: apply_artifact_registry
+      #   run: terraform apply --auto-approve -no-color -target="module.artifact_registry"
+      #   working-directory: ${{ env.TF_DIR }}
 
-      - name: Extract artifact registry repo id
-        id: extract_registry_repo_id
-        run: |
-          repository_id=$(terraform output -no-color -json artifact_registry_repository_id | jq -r '.')
-          echo "REPOSITORY_ID=$repository_id" >> "$GITHUB_OUTPUT"     
-        working-directory: ${{ env.TF_DIR }}
+      # - name: Extract artifact registry repo id
+      #   id: extract_registry_repo_id
+      #   run: |
+      #     repository_id=$(terraform output -no-color -json artifact_registry_repository_id | jq -r '.')
+      #     echo "REPOSITORY_ID=$repository_id" >> "$GITHUB_OUTPUT"     
+      #   working-directory: ${{ env.TF_DIR }}
 
-      - name: Get last succesful commit id
-        uses: actions/github-script@v7
-        id: last_successful_commit
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          script: |
-            const { data: result } = await github.rest.actions.listWorkflowRuns({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'Deploy.yml',
-              branch: 'main',
-              status: 'success',
-              per_page: 1
-            });
-            if (!result || result.total_count == 0)
-              return null;
-            else
-              return result.workflow_runs[0].head_sha;
+      # - name: Get last succesful commit id
+      #   uses: actions/github-script@v7
+      #   id: last_successful_commit
+      #   with:
+      #     github-token: ${{ secrets.GH_TOKEN }}
+      #     script: |
+      #       const { data: result } = await github.rest.actions.listWorkflowRuns({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         workflow_id: 'Deploy.yml',
+      #         branch: 'main',
+      #         status: 'success',
+      #         per_page: 1
+      #       });
+      #       if (!result || result.total_count == 0)
+      #         return null;
+      #       else
+      #         return result.workflow_runs[0].head_sha;
 
 
-      - name: Build and Push Docker Images and identify image tags
-        env:
-          GCP_ARTIFACT_REGISTRY_REPOSITORY_ID: ${{ steps.extract_registry_repo_id.outputs.REPOSITORY_ID }}
-          LAST_SUCCESSFUL_COMMIT: ${{ steps.last_successful_commit.outputs.result }}
-        run: |
-          chmod +x ./deploy/build-push-docker.sh
-          ./deploy/build-push-docker.sh
+      # - name: Build and Push Docker Images and identify image tags
+      #   env:
+      #     GCP_ARTIFACT_REGISTRY_REPOSITORY_ID: ${{ steps.extract_registry_repo_id.outputs.REPOSITORY_ID }}
+      #     LAST_SUCCESSFUL_COMMIT: ${{ steps.last_successful_commit.outputs.result }}
+      #   run: |
+      #     chmod +x ./deploy/build-push-docker.sh
+      #     ./deploy/build-push-docker.sh
 
 
       
 
 
-      # - name: Print folders
-      #   run: cat "$GOOGLE_GHA_CREDS_PATH"
+      # # - name: Print folders
+      # #   run: cat "$GOOGLE_GHA_CREDS_PATH"
 
-      # - name: Print JSON content
-      #   run: find . -type d
+      # # - name: Print JSON content
+      # #   run: find . -type d
         
 
 

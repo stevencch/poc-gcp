@@ -69,3 +69,9 @@ variable "machine_type" {
   default     = "e2-micro"
 
 }
+
+variable "tags" {
+  description = "The tags to attach to the instances"
+  type        = list(string)
+  default     = []
+}

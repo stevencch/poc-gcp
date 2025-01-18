@@ -38,4 +38,5 @@ module "instance_simple2" {
     email  = google_service_account.default.email
     scopes = ["cloud-platform"]
   }
+  tags = ["web"]
 }
