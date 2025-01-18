@@ -60,7 +60,7 @@ resource "google_compute_instance" "default_linux3-1" {
 
   network_interface {
     network    = google_compute_network.vpc-3.name
-    subnetwork = google_compute_subnetwork.vpc-3-app
+    subnetwork = google_compute_subnetwork.vpc-3-app.name
 
     access_config {
       // Ephemeral public IP
@@ -99,7 +99,7 @@ resource "google_compute_instance" "default_linux4-1" {
 
   network_interface {
     network    = google_compute_network.vpc-4.name
-    subnetwork = google_compute_subnetwork.vpc-4-app
+    subnetwork = google_compute_subnetwork.vpc-4-app.name
     access_config {
       // Ephemeral public IP
     }
