@@ -30,7 +30,7 @@ resource "google_compute_subnetwork" "vpc-3-app" {
   project       = var.gcp_project_id
   region        = "us-east1"
   name          = "cft-vm-vpc-3-app-${random_string.suffix.result}"
-  ip_cidr_range = "10.0.3.0/20"
+  ip_cidr_range = "10.0.3.0/24"
   network       = google_compute_network.vpc-3.self_link
 }
 
@@ -45,7 +45,7 @@ resource "google_compute_subnetwork" "vpc-4-app" {
   project       = var.gcp_project_id
   region        = "us-east1"
   name          = "cft-vm-vpc-4-app-${random_string.suffix.result}"
-  ip_cidr_range = "10.0.4.0/20"
+  ip_cidr_range = "10.0.4.0/24"
   network       = google_compute_network.vpc-4.self_link
 }
 
