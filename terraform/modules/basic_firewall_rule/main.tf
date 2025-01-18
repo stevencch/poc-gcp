@@ -25,7 +25,6 @@ resource "google_compute_firewall" "rules" {
     protocol = "tcp"
     ports    = ["80", "8080", "1000-2000", "22"]
   }
-  target_tags   = ["web"]
-  source_ranges = ["10.10.10.0/24", "10.10.20.0/24", "10.10.30.0/24", "10.10.40.0/24", "10.10.50.0/24", "10.128.0.0/20"]
+  source_ranges = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"]
 }
 # [END vpc_firewall_create]
