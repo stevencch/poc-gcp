@@ -22,3 +22,6 @@ variable "network" {
   description = "The name of the network to create"
 }
 
+variable "name" {
+  description = "The name of the firewall"
+}

@@ -10,6 +10,7 @@ module "instance_simple" {
     email  = google_service_account.default.email
     scopes = ["cloud-platform"]
   }
+  tags = ["web"]
 }
 
 module "instance_simple1" {
@@ -24,6 +25,7 @@ module "instance_simple1" {
     email  = google_service_account.default.email
     scopes = ["cloud-platform"]
   }
+  tags = ["web"]
 }
 
 
