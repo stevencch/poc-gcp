@@ -22,14 +22,14 @@ resource "random_string" "suffix" {
 
 resource "google_compute_network" "vpc-3" {
   project                 = var.gcp_project_id
-  name                    = "cft-vm-vpc-3-${random_string.suffix.result}"
+  name                    = "cft-vm-vpc-3"
   auto_create_subnetworks = "false"
 }
 
 resource "google_compute_subnetwork" "vpc-3-app" {
   project       = var.gcp_project_id
   region        = "us-east1"
-  name          = "cft-vm-vpc-3-app-${random_string.suffix.result}"
+  name          = "cft-vm-vpc-3-app"
   ip_cidr_range = "10.0.3.0/24"
   network       = google_compute_network.vpc-3.self_link
 }
@@ -37,14 +37,14 @@ resource "google_compute_subnetwork" "vpc-3-app" {
 
 resource "google_compute_network" "vpc-4" {
   project                 = var.gcp_project_id
-  name                    = "cft-vm-vpc-4-${random_string.suffix.result}"
+  name                    = "cft-vm-vpc-4"
   auto_create_subnetworks = "false"
 }
 
 resource "google_compute_subnetwork" "vpc-4-app" {
   project       = var.gcp_project_id
   region        = "us-east1"
-  name          = "cft-vm-vpc-4-app-${random_string.suffix.result}"
+  name          = "cft-vm-vpc-4-app"
   ip_cidr_range = "10.0.4.0/24"
   network       = google_compute_network.vpc-4.self_link
 }
