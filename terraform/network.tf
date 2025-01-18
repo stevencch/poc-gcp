@@ -23,16 +23,16 @@ resource "random_string" "suffix" {
 resource "google_compute_network" "main" {
   project                 = var.gcp_project_id
   name                    = "cft-vm-test-${random_string.suffix.result}"
-  auto_create_subnetworks = "true"
+  auto_create_subnetworks = "false"
 }
 
-# resource "google_compute_subnetwork" "main" {
-#   project       = var.gcp_project_id
-#   region        = "us-east1"
-#   name          = "cft-vm-test-${random_string.suffix.result}"
-#   ip_cidr_range = "10.128.0.0/20"
-#   network       = google_compute_network.main.self_link
-# }
+resource "google_compute_subnetwork" "main" {
+  project       = var.gcp_project_id
+  region        = "us-east1"
+  name          = "cft-vm-test-${random_string.suffix.result}"
+  ip_cidr_range = "10.128.0.0/20"
+  network       = google_compute_network.main.self_link
+}
 
 
 resource "google_compute_network" "main1" {
@@ -50,9 +50,9 @@ resource "google_compute_network" "main1" {
 # }
 
 
-module "peering2" {
-  source        = "terraform-google-modules/network/google//modules/network-peering"
-  version       = "~> 10.0"
-  local_network = google_compute_network.main.self_link
-  peer_network  = google_compute_network.main1.self_link # Replace with self link to VPC network "other" in quotes
-}
+# module "peering2" {
+#   source        = "terraform-google-modules/network/google//modules/network-peering"
+#   version       = "~> 10.0"
+#   local_network = google_compute_network.main.self_link
+#   peer_network  = google_compute_network.main1.self_link # Replace with self link to VPC network "other" in quotes
+# }
