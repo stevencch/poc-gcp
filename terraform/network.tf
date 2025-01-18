@@ -37,7 +37,7 @@ resource "google_compute_subnetwork" "vpc-3-app" {
 
 resource "google_compute_network" "vpc-4" {
   project                 = var.gcp_project_id
-  name                    = "cft-vm-vpc-3-${random_string.suffix.result}"
+  name                    = "cft-vm-vpc-4-${random_string.suffix.result}"
   auto_create_subnetworks = "false"
 }
 
