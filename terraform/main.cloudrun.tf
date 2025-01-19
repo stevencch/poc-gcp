@@ -42,7 +42,7 @@ module "my-nest-app_cloud_run_service" {
     DB_PW                 = var.db_pw
     INPUT_BUCKET          = module.test_cloud_storage.name
     INPUT_FILE            = "test.csv"
-    TASK_QUEUE_NAME       = module.import_retail_full_ctqueue.name
+    # TASK_QUEUE_NAME       = module.import_retail_full_ctqueue.name
     NEW_RELIC_APP_NAME    = "poc-gcp"
     NEW_RELIC_LICENSE_KEY = var.new_relice_license_key
   }
@@ -96,7 +96,7 @@ module "myapp1_cloud_run_service" {
     #DB_IP                                         = module.mypg.instance_public_ip
     DB_PW             = var.db_pw
     DATABASE_ID       = module.firestore.name
-    DEAD_LETTER_TOPIC = module.core_deadletter_topic.id
+    # DEAD_LETTER_TOPIC = module.core_deadletter_topic.id
   }
   required_roles = [
     "roles/iam.serviceAccountUser",

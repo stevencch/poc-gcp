@@ -55,17 +55,17 @@
 #   }
 # }
 
-# Give errorhandler access to the errors db
-resource "google_project_iam_member" "datastore_role" {
-  project = var.gcp_project_id
-  role    = "roles/datastore.user"
-  member  = "serviceAccount:${module.error_handler_cf.google_service_account_email}"
-  condition {
-    title       = "access_errors_db"
-    description = "Allow access only to the errors db"
-    expression  = "resource.name==\"${module.errors_db.id}\""
-  }
-}
+# # Give errorhandler access to the errors db
+# resource "google_project_iam_member" "datastore_role" {
+#   project = var.gcp_project_id
+#   role    = "roles/datastore.user"
+#   member  = "serviceAccount:${module.error_handler_cf.google_service_account_email}"
+#   condition {
+#     title       = "access_errors_db"
+#     description = "Allow access only to the errors db"
+#     expression  = "resource.name==\"${module.errors_db.id}\""
+#   }
+# }
 
 
 
