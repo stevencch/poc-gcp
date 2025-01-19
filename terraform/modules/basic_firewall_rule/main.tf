@@ -15,7 +15,7 @@
  */
 
 # [START vpc_firewall_create]
-resource "google_compute_firewall" "rules80" {
+resource "google_compute_firewall" "rulesweb" {
   project     = var.project_id # Replace this with your project ID in quotes
   name        = "${var.name}web"
   network     = var.network
@@ -28,7 +28,7 @@ resource "google_compute_firewall" "rules80" {
   source_ranges = ["0.0.0.0/0"]
 }
 
-resource "google_compute_firewall" "rules22" {
+resource "google_compute_firewall" "rulesssh" {
   project     = var.project_id # Replace this with your project ID in quotes
   name        = "${var.name}ssh"
   network     = var.network
