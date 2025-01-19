@@ -39,9 +39,9 @@ module "my-nest-app_cloud_run_service" {
     LOCATION_ID                = var.gcp_region
     PAYMENT_NOTIFICATION_TOPIC = module.payment_notifications_topic.name
     # DB_IP                                         = google_sql_database_instance.instance.public_ip_address
-    DB_PW                 = var.db_pw
-    INPUT_BUCKET          = module.test_cloud_storage.name
-    INPUT_FILE            = "test.csv"
+    DB_PW        = var.db_pw
+    INPUT_BUCKET = module.test_cloud_storage.name
+    INPUT_FILE   = "test.csv"
     # TASK_QUEUE_NAME       = module.import_retail_full_ctqueue.name
     NEW_RELIC_APP_NAME    = "poc-gcp"
     NEW_RELIC_LICENSE_KEY = var.new_relice_license_key
@@ -94,8 +94,8 @@ module "myapp1_cloud_run_service" {
     GCP_LOCATION_ID = var.gcp_region
     #SQL_DATABASE_PRIMARY_INSTANCE_CONNECTION_NAME = module.mypg.instance_name
     #DB_IP                                         = module.mypg.instance_public_ip
-    DB_PW             = var.db_pw
-    DATABASE_ID       = module.firestore.name
+    DB_PW       = var.db_pw
+    DATABASE_ID = module.firestore.name
     # DEAD_LETTER_TOPIC = module.core_deadletter_topic.id
   }
   required_roles = [
