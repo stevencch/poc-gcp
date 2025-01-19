@@ -15,16 +15,29 @@
  */
 
 # [START vpc_firewall_create]
-resource "google_compute_firewall" "rules" {
+resource "google_compute_firewall" "rules80" {
   project     = var.project_id # Replace this with your project ID in quotes
-  name        = var.name
+  name        = "${var.name}web"
   network     = var.network
   description = "Creates firewall rule targeting tagged instances"
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "8080", "1000-2000", "22"]
+    ports    = ["80", "8080", "1000-2000"]
   }
-  source_ranges = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24", "10.0.4.0/24"]
+  source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "rules22" {
+  project     = var.project_id # Replace this with your project ID in quotes
+  name        = "${var.name}ssh"
+  network     = var.network
+  description = "Creates firewall rule targeting tagged instances"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+  source_ranges = ["35.235.240.0/20"]
 }
 # [END vpc_firewall_create]
