@@ -50,9 +50,9 @@ resource "google_compute_subnetwork" "vpc-4-app" {
 }
 
 
-# module "peering2" {
-#   source        = "terraform-google-modules/network/google//modules/network-peering"
-#   version       = "~> 10.0"
-#   local_network = google_compute_network.main.self_link
-#   peer_network  = google_compute_network.main1.self_link # Replace with self link to VPC network "other" in quotes
-# }
+module "peering2" {
+  source        = "terraform-google-modules/network/google//modules/network-peering"
+  version       = "~> 10.0"
+  local_network = google_compute_network.vpc-3.self_link
+  peer_network  = google_compute_network.vpc-4.self_link # Replace with self link to VPC network "other" in quotes
+}
