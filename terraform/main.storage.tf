@@ -2,8 +2,8 @@
 module "test_cloud_storage" {
   source      = "./modules/gcp/cloud_storage"
   project     = var.gcp_project_id
-  region_id   = var.gcp_region
-  bucket_name = "inventory-storage-ause1-retaildelta"
+  region_id   = "us-west1"
+  bucket_name = "my-bucket"
 
 
   lifecycle_rules = {
